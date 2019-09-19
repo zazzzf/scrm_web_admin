@@ -1,0 +1,177 @@
+<template>
+	<el-card>
+		
+		<div slot="header" >
+			<span>案例研究管理</span>
+		    <el-button type="text" style="float: right;padding: 3px 0">
+				<router-link to="/case/case-add">
+				    {{$t('route.caseAdd')}}
+				</router-link>
+			</el-button>
+		</div>
+		<div style="min-height: 700px;">
+			<el-table :data="caseList">
+				<el-table-column label="案例标题" prop="tiktok_video_name" min-width="400"></el-table-column>
+				<el-table-column label="状态">
+					<template slot-scope="scope">
+						<el-tag type="success" v-if="scope.row.status == 1">已通过</el-tag>
+						<el-tag type="danger" v-if="scope.row.status == -1">已拒绝</el-tag>
+						<el-tag type="default" v-if="scope.row.status == 0">待审核</el-tag>
+					</template>
+				</el-table-column>
+				<el-table-column label="创建人" prop="username" ></el-table-column>
+				<el-table-column label="审核人" prop="check_manager" ></el-table-column>
+				<el-table-column label="创建时间" prop="created" min-width="120"></el-table-column>
+				<el-table-column label="操作" min-width="300">
+					<template slot-scope="scope">
+						<el-button size="mini" type="info" @click='readSns(scope.row)' round>查看</el-button>
+						<el-button size="mini" type="warning" round @click='checkedSns(scope.row)'>审核</el-button>
+						<el-button size="mini" round type="primary" @click='editSns(scope.row)'>编辑</el-button>
+						<el-button size="mini" type="danger" round @click='deleteSns(scope.row.inspiration_id)'>删除</el-button>
+					 </template>
+				</el-table-column>
+			</el-table>
+		</div>
+		<el-pagination
+		  background
+		  v-if='caseList.length>10'
+		  layout="prev, pager, next"
+		  :total="pageData.count"
+		  @current-change='pageChange'>
+		</el-pagination>
+		<el-dialog :visible.sync="readSnsShow" top='2vh' min-width='375px'>
+			<el-row>
+				<el-col :span="8"><video controls="controls" style="width:100%;" :src="readSnsData.no_watermark_video"></video></el-col>
+				<el-col :span="16">
+					<el-form style="margin:20px 0" label-width="130px" >
+						<el-form-item label="案例标题">{{readSnsData.tiktok_video_name}}</el-form-item>
+						<el-form-item label="案例状态">
+							<el-tag type="success" v-if="readSnsData.status == 1">已通过</el-tag>
+							<el-tag type="danger" v-if="readSnsData.status == -1">已拒绝</el-tag>
+							<el-tag type="default" v-if="readSnsData.status == 0">待审核</el-tag>
+						</el-form-item>
+						<el-form-item label="案例审核人">{{readSnsData.check_manager}}</el-form-item>
+						<el-form-item label="案例创建人">{{readSnsData.username}}</el-form-item>
+						<el-form-item label="案例创建时间">{{readSnsData.created}}</el-form-item>
+						<div class="video-number">
+							<el-row>
+								<el-col :span="8"><p>获赞</p><p>100000000000</p></el-col>
+								<el-col :span="8"><p>获赞</p><p>100000000000</p></el-col>
+								<el-col :span="8"><p>获赞</p><p>100000000000</p></el-col>
+							</el-row>
+						</div>
+						<el-form-item label="灵感内容">{{readSnsData.inspiration}}</el-form-item>
+						<el-form-item label="走红原因">{{readSnsData.reason}}</el-form-item>
+						<el-form-item label="借鉴意义">{{readSnsData.learn}}</el-form-item>
+						
+					</el-form>
+				</el-col>
+			</el-row>
+			<div slot='footer' v-if="doWhat=='checked'">
+				<el-input type="textarea" :rows="2" placeholder="若不通过,请输入审核不通过原因" style="margin-bottom: 10px;" v-model="nocheckedreason"></el-input>
+				<el-button type="primary" @click='checkedSnsStatus(1)'>审核通过</el-button>
+				<el-button type="danger" @click='checkedSnsStatus(-1)'>审核不通过</el-button>
+				<el-button type="default" @click='checkedSnsStatus()'>取消审核</el-button>
+			</div>
+		</el-dialog>
+	</el-card>
+</template>
+
+<script>
+import caseApi from '@/api/case.js'
+	export default{
+		data(){
+			return{
+				caseList:[],
+				readSnsShow:false,
+				readSnsData:{},
+				nocheckedreason:"",
+				doWhat:'',
+				pageData:{
+					page:1,
+					count:null,
+				}
+			}
+		},
+		methods:{
+			getList(){
+				let postData = {
+					page:this.pageData.page,
+					pageSize:10
+				}
+				caseApi.getList(postData).then(res => {
+					this.caseList = res.data.list
+				})
+			},
+			editSns(data){
+				if(data){
+					this.$router.push({
+						name:'caseAdd',
+						params: {
+							data,
+						}
+					})
+				}
+			},
+			checkedSns(data){
+				this.readSnsData = data;
+				this.doWhat = 'checked';
+				this.readSnsShow = true;
+			},
+			checkedSnsStatus(status){
+				if(status){
+					let postData = {id:this.readSnsData.inspiration_id,status};
+					if(status == -1&&!this.nocheckedreason){this.$message.warning('请输入审核不通过原因');return}
+					if(status == -1&&this.nocheckedreason){postData.reason = this.nocheckedreason}
+					caseApi.checkTikTok(postData).then(res => {
+						this.$message.success('审核完成');
+						this.readSnsShow = false;
+						this.getList();
+					})
+				}else{
+					this.readSnsShow = false;
+				}
+			},
+			deleteSns(inspirationId){
+				this.$confirm('此操作将永久删除该案例, 是否继续?', '提示', {
+				  confirmButtonText: '确认删除',
+				  cancelButtonText: '取消',
+				  type: 'warning'
+				}).then(() => {
+				  caseApi.delTikTok({inspirationId}).then(res => {
+				  	this.$message.success('删除成功');
+				  	this.getList();
+				  })
+				}).catch(() => {
+				           
+				});
+				
+			},
+			readSns(data){
+				this.readSnsData = data;
+				this.readSnsShow = true;
+			},
+			pageChange(page){
+				this.pageData.page = page;
+				this.getList();
+			}
+		},
+		created(){
+			this.getList()
+		}
+	}
+</script>
+
+<style lang="less" scoped>
+	video:focus{
+		outline: none;
+	}
+	.video-number{
+		margin-bottom: 20px;
+		border-top:1px solid #BFCBD9;
+		border-bottom:1px solid #BFCBD9;
+		p{
+			text-align: center;
+		}
+	}
+</style>
