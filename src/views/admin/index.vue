@@ -27,7 +27,7 @@
         </div>
 		<el-pagination
 		  background
-		  v-if='userList.length>10'
+		  v-if='pageData.count>10'
 		  layout="prev, pager, next"
 		  :total="pageData.count"
 		  @current-change='pageChange'>
@@ -103,6 +103,7 @@ export default {
 			};
             adminUser.userList(postData).then( res => {
                 this.userList = res.data.list;
+				this.pageData.count = res.data.count;
             })
         },
         showEditModal(id){

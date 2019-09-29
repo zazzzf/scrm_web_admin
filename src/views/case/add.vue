@@ -19,6 +19,11 @@
 						</div>
                         <!-- <a :href="tikJson.url">{{tikJson.url}}</a> -->
                     </el-form-item>
+					<el-form-item label="标签" prop="tags">
+						<el-select style="width: 100%;" clearable  v-model="addDyData.tags" multiple  placeholder="标签选择">
+							<el-option v-for="item in tagsList" :key="item.tag_id" :label="item.name" :value="item.tag_id"></el-option>
+						</el-select>
+					</el-form-item>
                     <el-form-item :label='$t("form.accountlinks")' prop='accountLink'>
                         <el-input v-model="addDyData.accountLink"></el-input>
                     </el-form-item>
@@ -52,10 +57,10 @@ export default {
             if(!value){
                 callback(new Error('请输入抖音视频地址'));
             }else{
-                if (value.indexOf('http://v.douyin.com') < 0) {
-                    callback(new Error('请输入正确的抖音视频地址'));
+                if (value.indexOf('http://v.douyin.com') !== -1 ||value.indexOf('https://www.iesdouyin.com') !== -1) {
+					callback();
                 } else {
-                    callback();
+					callback(new Error('请输入正确的抖音视频地址'));
                 }
             }
             
@@ -68,6 +73,7 @@ export default {
                     inspiration: '',
                     douyinUrl: '',
                     accountLink:'',
+					tags:[],
                 },
                 lgRules: {
                     videolinks: [{required: true, validator: validatePassVideo, trigger: 'change' }],
@@ -81,6 +87,11 @@ export default {
 				isEditCase:false,
         }
     },
+	computed:{
+		tagsList(){
+			return this.$store.getters.tagList
+		}
+	},
     methods:{
          //取消上传
             cancelTik() {
@@ -92,6 +103,13 @@ export default {
                 var that = this;
                 this.$refs['lgForm'].validate((valid) => {
                     if (valid && that.addDyData.douyinUrl) {
+						var tags='';
+						if(this.addDyData.tags.length>0){
+							this.addDyData.tags.forEach(item => {
+								tags = tags.concat(`${item},`)
+							})
+							tags = tags.substr(0,tags.length-1);
+						};
                         let postData = {
                             videoUrl: this.addDyData.videolinks,
                             accountLink: this.addDyData.accountLink,
@@ -99,7 +117,8 @@ export default {
                             learn: this.addDyData.learn,
                             inspiration: this.addDyData.inspiration,
                             noWatermarkVideo: this.addDyData.douyinUrl,
-                            tikTokVideoName: this.tikJson.name
+                            tikTokVideoName: this.tikJson.name,
+							tag:tags
                         };
 						if(this.addDyData.inspiration_id){
 							postData.inspirationId = this.addDyData.inspiration_id
@@ -120,10 +139,16 @@ export default {
             },
             getTikTokUrl(){
                 this.isBtnLoad = true;
-                if(this.addDyData.videolinks.indexOf('http://v.douyin.com')>=0){
-                    var tikdata = this.addDyData.videolinks.replace(/\s*/g,"")
-                    var a  = tikdata.substring(tikdata.indexOf('http'));
-                    var b = a.split('复制'); //  b[0] 为抖音链接
+                if(this.addDyData.videolinks.indexOf('http://v.douyin.com')>=0 || this.addDyData.videolinks.indexOf('https://www.iesdouyin.com/share')>=0){
+					var b;
+					if(this.addDyData.videolinks.indexOf('http://v.douyin.com')>=0){
+						var tikdata = this.addDyData.videolinks.replace(/\s*/g,"")
+						var a  = tikdata.substring(tikdata.indexOf('http'));
+						b = a.split('复制'); //  b[0] 为抖音链接
+					}
+					if(this.addDyData.videolinks.indexOf('https://www.iesdouyin.com/share')>=0){
+						b = [this.addDyData.videolinks] 
+					}
                     caseApi.getTikTokUrl({url: b[0]}).then(data => {
                         this.tikJson = data.data;
                         this.addDyData.douyinUrl = data.data.url;
@@ -140,6 +165,13 @@ export default {
 				if(data){
 					this.tikJson.url = data.no_watermark_video;
 					this.tikJson.name = data.tiktok_video_name;
+					
+					var tags = [];
+					if(data.tag){
+						data.tag.forEach(item => {
+							tags.push(item.tag_id)
+						})
+					};
 					this.addDyData = {
 						inspiration_id:data.inspiration_id,
 						videolinks: data.video_url,
@@ -148,6 +180,7 @@ export default {
 						inspiration: data.inspiration,
 						douyinUrl: data.no_watermark_video ,
 						accountLink: data.account_links,
+						tags:tags
 					}
 				}else{
 					return
@@ -156,6 +189,7 @@ export default {
     },
 	created() {
 		this.isEdit(this.$route.params.data)
+		if(this.$route.params.url)this.addDyData.videolinks = this.$route.params.url
 	}
 }
 </script>

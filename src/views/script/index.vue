@@ -2,10 +2,10 @@
 	<el-card>
 		
 		<div slot="header" >
-			<span>案例研究管理</span>
+			<span>台本库管理</span>
 		    <el-button type="text" style="float: right;padding: 3px 0">
-				<router-link to="/case/case-add">
-				    添加案例
+				<router-link to="/case/script-add">
+				    添加台本
 				</router-link>
 			</el-button>
 		</div>
@@ -33,8 +33,8 @@
 			</el-form>
 		</div>
 		<div style="min-height: 700px;">
-			<el-table :data="caseList">
-				<el-table-column label="案例标题" prop="tiktok_video_name" min-width="400"></el-table-column>
+			<el-table :data="scriptList">
+				<el-table-column label="标题" prop="title" min-width="200"></el-table-column>
 				<el-table-column label="状态">
 					<template slot-scope="scope">
 						<el-tag type="success" v-if="scope.row.status == 1">已通过</el-tag>
@@ -50,7 +50,7 @@
 						<el-button size="mini" type="info" @click='readSns(scope.row)' round>查看</el-button>
 						<el-button size="mini" type="warning" round @click='checkedSns(scope.row)'>审核</el-button>
 						<el-button size="mini" round type="primary" @click='editSns(scope.row)'>编辑</el-button>
-						<el-button size="mini" type="danger" round @click='deleteSns(scope.row.inspiration_id)'>删除</el-button>
+						<el-button size="mini" type="danger" round @click='deleteSns(scope.row.script_id)'>删除</el-button>
 					 </template>
 				</el-table-column>
 			</el-table>
@@ -63,38 +63,28 @@
 		  @current-change='pageChange'>
 		</el-pagination>
 		<el-dialog :visible.sync="readSnsShow" top='2vh' min-width='375px'>
-			<el-row v-if="readSnsShow">
-				<el-col :span="8">
-					<video controls="controls" style="width:100%;" :src="readSnsData.no_watermark_video"></video>
-				</el-col>
-				<el-col :span="16">
-					<el-form style="margin:20px 0" label-width="130px" >
-						<el-form-item label="案例标题">{{readSnsData.tiktok_video_name}}</el-form-item>
-						<el-form-item label="案例状态">
-							<el-tag type="success" v-if="readSnsData.status == 1">已通过</el-tag>
-							<el-tag type="danger" v-if="readSnsData.status == -1">已拒绝</el-tag>
-							<el-tag type="default" v-if="readSnsData.status == 0">待审核</el-tag>
-						</el-form-item>
-						<el-form-item label="案例审核人">{{readSnsData.check_manager}}</el-form-item>
-						<el-form-item label="案例创建人">{{readSnsData.username}}</el-form-item>
-						<el-form-item label="案例创建时间">{{readSnsData.created}}</el-form-item>
-						<div class="video-number">
-							<el-row>
-								<el-col :span="8"><p>获赞</p><p>100000000000</p></el-col>
-								<el-col :span="8"><p>获赞</p><p>100000000000</p></el-col>
-								<el-col :span="8"><p>获赞</p><p>100000000000</p></el-col>
-							</el-row>
-						</div>
-						<el-form-item label="灵感内容">{{readSnsData.inspiration}}</el-form-item>
-						<el-form-item label="走红原因">{{readSnsData.reason}}</el-form-item>
-						<el-form-item label="借鉴意义">{{readSnsData.learn}}</el-form-item>
-						<el-form-item label="标签">
-							<el-tag v-for="item in readSnsData.tag" :key='item.tag_id'>{{item.name}}</el-tag>
-						</el-form-item>
-						
-					</el-form>
-				</el-col>
-			</el-row>
+			<p style="font-size: 18px; text-align: center;">{{readSnsData.title}}</p>
+			<el-form style="margin:20px 0" label-width="130px" v-if="readSnsShow">
+				<el-form-item label="标题">{{ readSnsData.title }}</el-form-item>
+				<el-form-item label="封面">
+					<img :src='readSnsData.cover' width="100px" />
+				</el-form-item>
+				<el-form-item label="审核状态">
+					<el-tag type="success" v-if="readSnsData.status == 1">已通过</el-tag>
+					<el-tag type="danger" v-if="readSnsData.status == -1">已拒绝</el-tag>
+					<el-tag type="default" v-if="readSnsData.status == 0">待审核</el-tag>
+				</el-form-item>
+				<el-form-item label="不通过原因" v-if="readSnsData.status == -1">{{ readSnsData.reason }}</el-form-item>
+				<el-form-item label="创建人">{{ readSnsData.username }}</el-form-item>
+				<el-form-item label="创建时间">{{ readSnsData.created }}</el-form-item>
+				<el-form-item label="审核人">{{ readSnsData.check_manager }}</el-form-item>
+				<el-form-item label="标签">
+					<el-tag v-for="item in readSnsData.tag" :key='item.tag_id'>{{item.name}}</el-tag>
+				</el-form-item>
+				<el-form-item label="内容">
+					<div v-html="readSnsData.content"></div>
+				</el-form-item>
+			</el-form>
 			<div slot='footer' v-if="doWhat=='checked'">
 				<el-input type="textarea" :rows="2" placeholder="若不通过,请输入审核不通过原因" style="margin-bottom: 10px;" v-model="nocheckedreason"></el-input>
 				<el-button type="primary" @click='checkedSnsStatus(1)'>审核通过</el-button>
@@ -106,11 +96,11 @@
 </template>
 
 <script>
-import caseApi from '@/api/case.js'
+import scriptApi from '@/api/script.js'
 	export default{
 		data(){
 			return{
-				caseList:[],
+				scriptList:[],
 				readSnsShow:false,
 				readSnsData:{},
 				nocheckedreason:"",
@@ -124,6 +114,7 @@ import caseApi from '@/api/case.js'
 					tag:[],
 					status:'',
 				}
+				
 			}
 		},
 		computed:{
@@ -146,15 +137,15 @@ import caseApi from '@/api/case.js'
 					postData.tag = tags.substr(0,tags.length-1);
 				}
 				if(this.searchData.status)postData.status = this.searchData.status
-				caseApi.getList(postData).then(res => {
-					this.caseList = res.data.list
+				scriptApi.getList(postData).then(res => {
+					this.scriptList = res.data.list
 					this.pageData.count = res.data.count;
 				})
 			},
 			editSns(data){
 				if(data){
 					this.$router.push({
-						name:'caseAdd',
+						name:'scriptAdd',
 						params: {
 							data,
 						}
@@ -165,13 +156,22 @@ import caseApi from '@/api/case.js'
 				this.readSnsData = data;
 				this.doWhat = 'checked';
 				this.readSnsShow = true;
+				this.$nextTick(()=>{
+					if(data.content.indexOf('<iframe')){
+						var iframe = document.querySelectorAll('iframe');
+						for(var i = 0; i<iframe.length;i++){
+							iframe[i].width = '100%';
+							iframe[i].height = '300px';
+						}
+					}
+				})
 			},
 			checkedSnsStatus(status){
 				if(status){
-					let postData = {id:this.readSnsData.inspiration_id,status};
+					let postData = {scriptId :this.readSnsData.script_id,status};
 					if(status == -1&&!this.nocheckedreason){this.$message.warning('请输入审核不通过原因');return}
-					if(status == -1&&this.nocheckedreason){postData.reason = this.nocheckedreason}
-					caseApi.checkTikTok(postData).then(res => {
+					if(status == -1&&this.nocheckedreason){postData.negativeReason = this.nocheckedreason}
+					scriptApi.checkScript(postData).then(res => {
 						this.$message.success('审核完成');
 						this.readSnsShow = false;
 						this.getList();
@@ -180,13 +180,13 @@ import caseApi from '@/api/case.js'
 					this.readSnsShow = false;
 				}
 			},
-			deleteSns(inspirationId){
+			deleteSns(script_id){
 				this.$confirm('此操作将永久删除该案例, 是否继续?', '提示', {
 				  confirmButtonText: '确认删除',
 				  cancelButtonText: '取消',
 				  type: 'warning'
 				}).then(() => {
-				  caseApi.delTikTok({inspirationId}).then(res => {
+				  scriptApi.delScript({scriptId: script_id}).then(res => {
 				  	this.$message.success('删除成功');
 				  	this.getList();
 				  })
@@ -198,6 +198,15 @@ import caseApi from '@/api/case.js'
 			readSns(data){
 				this.readSnsData = data;
 				this.readSnsShow = true;
+				this.$nextTick(()=>{
+					if(data.content.indexOf('<iframe')){
+						var iframe = document.querySelectorAll('iframe');
+						for(var i = 0; i<iframe.length;i++){
+							iframe[i].width = '100%';
+							iframe[i].height = '300px';
+						}
+					}
+				})
 			},
 			pageChange(page){
 				this.pageData.page = page;
@@ -230,5 +239,9 @@ import caseApi from '@/api/case.js'
 		p{
 			text-align: center;
 		}
+	}
+	iframe{
+		width: 100%;
+		height: 400px;
 	}
 </style>

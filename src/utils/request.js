@@ -56,7 +56,7 @@ service.interceptors.response.use(
     * 如通过xmlhttprequest 状态码标识 逻辑可写在下面error中
     */
     // if the custom code is not 20000, it is judged as an error.
-    if (res.code !== 0) {
+    if (res.code && res.code !== 0) {
       loading.close();
       Message({
         message: res.message || 'Error',
@@ -79,7 +79,7 @@ service.interceptors.response.use(
         return Promise.reject('error');
       
     } else {
-	    loading.close();
+	  loading.close();
       return res
     }
   },

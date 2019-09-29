@@ -9,3 +9,10 @@ export function qiniuToken(data){
 	})
 }
 
+export function uploadImg(data){
+	return request({
+	  url: 'http://up-z1.qiniup.com',
+	  method: 'POST',
+	  data,
+	})
+}

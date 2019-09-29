@@ -105,11 +105,30 @@ export const constantRoutes = [
       meta: { title: 'caseManage', icon: 'clipboard', affix: true }
     },
 	{
+	  path: 'script-manage',
+	  name: 'scriptManage',
+	  component: () => import('@/views/script/index.vue'),
+	  meta: { title: 'scriptLibrary', icon: 'people', affix: true }
+	},
+	{
+		path: 'script-add',
+		name: 'scriptAdd',
+		hidden: true,
+		component: () => import('@/views/script/add.vue'),
+		meta: { title: 'scriptAdd', icon: 'mange', affix: true }
+	},
+	{
 		path: 'case-add',
 		name: 'caseAdd',
 		hidden: true,
 		component: () => import('@/views/case/add.vue'),
 		meta: { title: 'caseAdd', icon: 'mange', affix: true }
+	},
+	{
+		path: 'resource',
+		name: 'resource',
+		component: () => import('@/views/case/resource'),
+		meta: { title: 'resource', icon: 'mange', affix: true }
 	},
   	]
   },

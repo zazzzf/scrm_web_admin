@@ -37,6 +37,7 @@
 			</div>
 			<el-pagination
 			  background
+			  v-if="pageData.count>10"
 			  layout="prev, pager, next"
 			  :total="pageData.count"
 			  @current-change='pageChange'>

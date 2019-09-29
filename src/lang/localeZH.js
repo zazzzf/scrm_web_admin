@@ -70,7 +70,7 @@ export default {
 		//----------------------------------自定义多语言路由------------------------------------------------
 		adminManage: '后台人员管理',
 		manage: '账户管理',
-		account: '账户设置',
+		account: '账户管理',
 		caseManage: '案例研究管理',
 		snsManage: '社交报告管理',
 		courseManage: '在线专家课管理',
@@ -84,6 +84,8 @@ export default {
 		tags:'标签管理',
 		tagsAdd: '添加标签',
 		tagsManage: '标签设置',
+		scriptLibrary:'台本库',
+		resource:'资源库',
 	},
 	setManage: {
 		edit_success: '修改成功',

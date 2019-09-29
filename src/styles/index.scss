@@ -40,7 +40,7 @@ a,
 a:focus,
 a:hover {
   cursor: pointer;
-  color: inherit;
+  color: #409EFF;
   text-decoration: none;
 }
 
@@ -166,4 +166,7 @@ div:focus {
 }
 .full-loading{
   z-index: 2002 !important;
+}
+.infinite-list{
+	overflow: auto;
 }

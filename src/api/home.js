@@ -1,12 +1,30 @@
 import request from '@/utils/request'
-import qs from 'qs'
 
-let home = {};
 
-home.weekStatistics = function(){
-  return request({
-    url: 'merchant/Statistics/weekStatistics',
-    method: 'GET',
-  })
+export function pendingChecKCase() {
+	return request({
+	  url: 'manager/dash_board/pendingChecKCase',
+	  method: 'GET',
+	})
 }
-export default home;
+
+export function pendingCheckScript() {
+	return request({
+	  url: 'manager/dash_board/pendingCheckScript',
+	  method: 'GET',
+	})
+}
+
+export function pendingCheckReport() {
+	return request({
+	  url: 'manager/dash_board/pendingCheckReport',
+	  method: 'GET',
+	})
+}
+
+export function storeIncrease() {
+	return request({
+	  url: 'manager/dash_board/storeIncrease',
+	  method: 'GET',
+	})
+}

@@ -8,7 +8,7 @@
 						this.$router.push('/sns');
 					}
 				"
-				content="编辑报告"
+				:content="addKonwledgeData.knowledge_id?'编辑报告':'添加报告'"
 			></el-page-header>
 		</span>
 		<div style="padding: 0 200px;">
@@ -38,7 +38,6 @@
 						</div>
 						<el-upload
 							:action="uploadApi"
-							class="upload-demo"
 							accept="image/png, image/jpeg, image/jpg"
 							v-if="!addKonwledgeData.cover"
 							name="file"
@@ -53,12 +52,10 @@
 								<div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
 								<div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过4MB</div>
 						</el-upload>
-						
 				</el-form-item>
 				<el-form-item :label="$t('knowledge.url')" prop="url">
 					<el-upload
 						ref="upload"
-						class="upload-demo"
 						:action="uploadApi"
 						name="file"
 						:max-size="512000"
@@ -275,7 +272,6 @@ export default {
 			var progress = event.loaded / event.total;
 			this.progressData.num = parseInt(progress * 100) - 1;
 		},
-		//上传秒拍
 		uploadMiaopai() {
 			var that = this;
 			this.$refs['konwledgeForm'].validate(valid => {
@@ -303,7 +299,7 @@ export default {
 						})
 					}else{
 						snsApi.addKnowledge(postData).then(data => {
-							that.$message.success(that.$t('message.add_success'));
+							that.$message.success('添加成功');
 							that.cancelAddSns();
 						});
 					}
@@ -346,6 +342,3 @@ export default {
 	}
 };
 </script>
-<style scoped>
-	@import url("//unpkg.com/element-ui@2.12.0/lib/theme-chalk/index.css");
-</style>

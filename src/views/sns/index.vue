@@ -33,9 +33,10 @@
 				</el-form-item>
 			</el-form>
 		</div>
-		<div style="min-height: 700px;">
+		<div style="min-height: 580px;">
 			<el-table :data="snsList">
 				<el-table-column label="报告标题" prop="title" min-width="400"></el-table-column>
+				
 				<el-table-column label="状态">
 					<template slot-scope="scope">
 						<el-tag type="success" v-if="scope.row.status == 1">已通过</el-tag>
@@ -56,10 +57,13 @@
 				</el-table-column>
 			</el-table>
 		</div>
-		<el-pagination background v-if="snsList.length > 10" layout="prev, pager, next" :total="pageData.count" @current-change="pageChange"></el-pagination>
+		<el-pagination background v-if="pageData.count > 10" layout="prev, pager, next" :total="pageData.count" @current-change="pageChange"></el-pagination>
 		<el-dialog :visible.sync="readSnsShow" top="2vh" min-width="375px">
-			<el-form style="margin:20px 0" label-width="130px" label-position="top">
+			<el-form style="margin:20px 0" label-width="130px" >
 				<el-form-item label="社交报告标题">{{ readSnsData.title }}</el-form-item>
+				<el-form-item label="封面">
+					<img :src='readSnsData.cover' width="100px" />
+				</el-form-item>
 				<el-form-item label="社交报告类型">
 					<el-tag type="success" v-if="readSnsData.type == 1">行业报告</el-tag>
 					<el-tag type="warning" v-if="readSnsData.type == 2">专家访谈</el-tag>
@@ -73,6 +77,9 @@
 				<el-form-item label="社交报告创建人">{{ readSnsData.username }}</el-form-item>
 				<el-form-item label="社交报告创建时间">{{ readSnsData.created }}</el-form-item>
 				<el-form-item label="社交报告审核人">{{ readSnsData.check_manager }}</el-form-item>
+				<el-form-item label="社交报告标签">
+					<el-tag v-for="item in readSnsData.tag" :key='item.tag_id'>{{item.name}}</el-tag>
+				</el-form-item>
 				<el-form-item label="社交报告">
 					<pdf :src='readSnsData.url' v-if="readSnsShow"></pdf>
 					<!-- <object :data="readSnsData.url" type="application/pdf" width="100%" height="800px">This browser does not support PDFs.</object> -->
@@ -131,8 +138,8 @@ export default {
 				pageSize: 10,
 				title: this.searchData.title,
 				industry: this.searchData.industry,
-				status:this.searchData.status,
 			};
+			if(this.searchData.status)postData.status = this.searchData.status
 			if(this.searchData.tag.length>0){
 				var tags = '';
 				this.searchData.tag.forEach(item => {
@@ -142,6 +149,7 @@ export default {
 			}
 			snsApi.getList(postData).then(res => {
 				this.snsList = res.data.list;
+				this.pageData.count = res.data.count;
 			});
 		},
 		editSns(data) {

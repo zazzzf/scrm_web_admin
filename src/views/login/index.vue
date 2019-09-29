@@ -16,7 +16,7 @@
         <el-input
           ref="userName"
           v-model="loginForm.userName"
-          :placeholder="$t('login.email')"
+          :placeholder="$t('login.username')"
           name="userName"
           type="text"
           tabindex="1"
@@ -67,7 +67,7 @@ export default {
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!value) {
-        callback(new Error('Please enter the correct user name'))
+        callback(new Error('请输入帐号'))
       } else {
         callback()
       }
@@ -81,8 +81,8 @@ export default {
     }
     return {
       loginForm: {
-        userName: 'xhl',
-        password: '111111'
+        userName: '',
+        password: ''
       },
       loginRules: {
         userName: [{ required: true, trigger: 'blur', validator: validateUsername }],
