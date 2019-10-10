@@ -1,12 +1,10 @@
 <template>
 	<div>
-		<div v-infinite-scroll="handleReachBottom"  class="infinite-list" :style="{height:`${height}px`,marginTop:'20px'}">
+		<div v-infinite-scroll="handleReachBottom"  class="infinite-list" :style="{height:`${height}px`,marginTop:'20px'}" infinite-scroll-immediate='false'>
 			<el-card dis-hover v-for="(item, index) in hotVideoList" :key="index" class='videoCard' style="margin-bottom: 20px;">
 				<el-row>
 					<el-col :span='3'>
 						<div style="display:inline-flex; align-items: center;">
-							<svg-icon icon-class="fire" v-if="index<3" style="font-size:28px" />
-							<div style="width: 28px;" v-else></div>
 							<span style="font-size: 18px; margin-right: 10px;">{{index+1}}.</span>
 							<img :src="JSON.parse(item.origin_cover_list).url_list[0]" alt="" width="70px">
 						</div>
@@ -27,9 +25,8 @@
 								<svg-icon icon-class="fire" :size='18' style='color:#FF7530' />评论数：{{item.comment_count|formatNumberRgx}}
 								<svg-icon icon-class="fire" :size='18' style='color:#FF7530' />转发数：{{item.forward_count|formatNumberRgx}}
 							</p>
-							<el-button type="primary" @click='toForward(item.share_url)'>发布案例</el-button>
-							<el-button type="success" @click=""><a :href="item.share_url" target="_blank" title="点击此处浏览视频" style="color:#fff">播放</a></el-button>
-							<el-button :type="item.collection==1?'warning':'default'" @click='toCollection(item)'>{{item.collection==1?'已收藏':'收藏'}}</el-button>
+							<el-button type="primary" size="mini" @click='toForward(item.share_url)'>发布案例</el-button>
+							<el-button type="success" size="mini" @click=""><a :href="item.share_url" target="_blank" title="点击此处浏览视频" style="color:#fff">播放</a></el-button>
 						</div>
 					</el-col>
 				</el-row>
@@ -66,9 +63,10 @@
 			getList(){
 				let postData = {
 					page:this.pageNum,
-					challengeId:this.challengeId,
+					pageSize:20,
+					type:2,
 				};
-				Resource.getChallengeVideos(postData).then(res => {
+				Resource.getUserCollection(postData).then(res => {
 					var list = res.data.list;
 					var oldList = this.hotVideoList;
 					if(list.length>0){
@@ -87,8 +85,8 @@
 			},
 			toCollection(item){
 				let postData = {
-					type: 1, //1热点话题视频 2热门视频 3热点视频
-					contentId: item.douyin_challenge_videos_id
+					type: 2, //1热点话题视频 2热点视频 3热门视频
+					contentId: item.douyin_hotspot_videos_id
 				};
 				if(item.collection == 1){
 					Resource.cancelCollection(postData).then(res => {
@@ -114,12 +112,12 @@
     }
 </script>
 
-<style>
+<style scoped>
 	.videoCard{
 		padding: 10px;
 	}
 	.desc{
 		margin: 10px 0;
-		font-size: 16px;
+		font-size: 14px;
 	}
 </style>

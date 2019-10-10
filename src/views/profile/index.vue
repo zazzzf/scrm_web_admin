@@ -8,17 +8,17 @@
         </el-col>
 
         <el-col :span="18" :xs="24">
-          <el-card>
+          <el-card style="max-height:820px">
             <el-tabs v-model="activeTab">
-              <el-tab-pane label="我的通知" name="activity">
-                <activity />
+              <el-tab-pane lazy label="收藏的热门视频" name="account">
+                <HotVideo  :height='scheight'></HotVideo>
               </el-tab-pane>
-              <el-tab-pane label="我的收藏" name="account">
-                <account :user="user" />
+              <el-tab-pane label="收藏的热点话题视频" name="account1">
+                <HotChallenge  :height='scheight'></HotChallenge>
               </el-tab-pane>
-			  <el-tab-pane label="操作记录" name="timeline">
-			    <timeline />
-			  </el-tab-pane>
+              <el-tab-pane label="收藏的热点视频" name="account2">
+                <HotSpotVideo  :height='scheight'></HotSpotVideo>
+              </el-tab-pane>
             </el-tabs>
           </el-card>
         </el-col>
@@ -31,26 +31,39 @@
 import Cookies from 'js-cookie'
 import { mapGetters } from 'vuex'
 import UserCard from './components/UserCard'
-import Activity from './components/Activity'
-import Timeline from './components/Timeline'
-import Account from './components/Account'
+import HotVideo from './components/video'
+import HotChallenge from './components/challenge'
+import HotSpotVideo from './components/hotSpot'
 
 export default {
   name: 'Profile',
-  components: { UserCard, Activity, Timeline, Account },
+  components: { UserCard,HotVideo,HotChallenge,HotSpotVideo },
   data() {
     return {
       user: {},
-      activeTab: 'activity'
+      activeTab: 'account',
+      componentsArr:[HotVideo,HotChallenge,HotSpotVideo],
+      componentsIndex:1,
+			scheight:1,
     }
   },
+  computed:{
+			currentTabComponent(){
+				return this.componentsArr[this.componentsIndex-1]
+			}
+		},
   created() {
     this.getUser()
   },
+  mounted(){
+		    var height = document.body.clientHeight; 
+		    this.scheight = height - 50-52-70;
+		},
   methods: {
     getUser() {
 	  var userJSon = Cookies.get('userinfo')
     var user = JSON.parse(userJSon)
+    console.log(user)
       this.user = {
         username:  user.username,
         mobile:  user.mobile,

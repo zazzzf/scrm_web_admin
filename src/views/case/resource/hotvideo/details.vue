@@ -66,9 +66,9 @@
 			getList(){
 				let postData = {
 					page:this.pageNum,
-					challengeId:this.challengeId,
+					hotSpotId:this.challengeId,
 				};
-				Resource.getChallengeVideos(postData).then(res => {
+				Resource.getHotSpotVideo(postData).then(res => {
 					var list = res.data.list;
 					var oldList = this.hotVideoList;
 					if(list.length>0){
@@ -87,8 +87,8 @@
 			},
 			toCollection(item){
 				let postData = {
-					type: 1, //1热点话题视频 2热门视频 3热点视频
-					contentId: item.douyin_challenge_videos_id
+					type: 2, //1热点话题视频 2热点视频 3热门视频
+					contentId: item.douyin_hotspot_videos_id
 				};
 				if(item.collection == 1){
 					Resource.cancelCollection(postData).then(res => {

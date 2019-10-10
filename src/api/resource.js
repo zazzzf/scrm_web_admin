@@ -50,4 +50,44 @@ resource.getStarUserInfo = function(data){
     data: qs.stringify(data)
   })
 }
+
+resource.getHotSpot = function(data){
+  return request({
+    url: 'manager/Hot_Track/getHotSpot',
+    method: 'POST',
+    data: qs.stringify(data)
+  })
+}
+
+resource.getHotSpotVideo = function(data){
+  return request({
+    url: 'manager/Hot_Track/getHotSpotVideo',
+    method: 'POST',
+    data: qs.stringify(data)
+  })
+}
+
+resource.addCollection = function(data){
+  return request({
+    url: 'manager/user/addCollection',
+    method: 'POST',
+    data: qs.stringify(data)
+  })
+}
+
+resource.cancelCollection = function(data){
+  return request({
+    url: 'manager/user/cancelCollection',
+    method: 'POST',
+    data: qs.stringify(data)
+  })
+}
+
+resource.getUserCollection = function(data){
+  return request({
+    url: 'manager/user/getUserCollection',
+    method: 'POST',
+    data: qs.stringify(data)
+  })
+}
 export default resource;
