@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<el-select style='position: fixed;width: 100px;right: 20px; z-index: 2; ' v-model='periods' @change='handleChange'>
-			<el-option v-for='item in periodsArr' :key='item' :value='item.toString()' :label="`第${item}期`"></el-option>
+			<el-option v-for='item in periodsArr' :key='item' :value='item.toString()' :label="item+ $t('casemanage.period')"></el-option>
 		</el-select>
 		<div v-infinite-scroll="handleReachBottom"  class="infinite-list" :style="{height:`${height}px`,marginTop:'20px'}">
 			<el-card dis-hover v-for="(item, index) in hotVideoList" :key="index" class='videoCard' style="margin-bottom: 20px;">
@@ -16,12 +16,12 @@
 					</el-col>
 					<el-col :span='15'>
 						<div style="display:inline-flex;height:70px; align-items: center;">
-							<p class="desc">播主：<a href="javascript:void(0);" @click="getStarDetails(item.uid)">{{item.nickname}}</a></p>
+							<p class="desc">{{$t('profile.anchor')}}：<a href="javascript:void(0);" @click="getStarDetails(item.uid)">{{item.nickname}}</a></p>
 						</div>
 					</el-col>
 					<el-col :span='6'>
 						<div style="display:inline-flex;height:70px; align-items: center;">
-							<svg-icon icon-class="fire"  style='color:#FF7530' />热度值：{{item.hot_value|formatNumberRgx}}
+							<svg-icon icon-class="fire"  style='color:#FF7530' />{{$t('casemanage.hot_value')}}：{{item.hot_value|formatNumberRgx}}
 						</div>
 					</el-col>
 				</el-row>
@@ -36,16 +36,15 @@
 					</p>
 				</div>
 				<p style="padding: 10px 10px;font-size: 16px; ">{{starDetails.signature}}</p>
-				<CellGroup>
-					<Cell title="关注数" :extra="starDetails.following_count" />
-					<Cell title="动态数" :extra="starDetails.dongtai_count" />
-					<Cell title="点赞数" :extra="starDetails.total_favorited" />
-					<Cell title="喜欢数" :extra="starDetails.favoriting_count" />
-					<Cell title="作品数" :extra="starDetails.aweme_count" />
-				</CellGroup>
+				<el-divider></el-divider>
+				<p style="padding: 10px 10px;font-size: 16px; ">{{$t('hotTrack.following_count')}}: {{starDetails.following_count}}</p>
+				<p style="padding: 10px 10px;font-size: 16px; ">{{$t('hotTrack.dongtai_count')}}: {{starDetails.dongtai_count}}</p>
+				<p style="padding: 10px 10px;font-size: 16px; ">{{$t('hotTrack.digg_count')}}: {{starDetails.total_favorited}}</p>
+				<p style="padding: 10px 10px;font-size: 16px; ">{{$t('hotTrack.favoriting_count')}}: {{starDetails.favoriting_count}}</p>
+				<p style="padding: 10px 10px;font-size: 16px; ">{{$t('hotTrack.aweme_count')}}: {{starDetails.aweme_count}}</p>
 			</div>
 			<div v-else style="height: 300px; display: flex; align-items: center;justify-content: center;font-size: 20px; color: #b5C8CE;">
-				<p >此播主信息暂未收入</p>
+				<p >{{$t('hotTrack.no_data')}}</p>
 			</div>
 			<div slot='footer'></div>
 		</el-dialog>

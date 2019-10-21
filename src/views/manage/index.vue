@@ -1,36 +1,36 @@
 <template>
     <el-card shadow='never'>
 		<div slot="header" >
-			<span>商户权限管理</span>
+			<span>{{$t('manage.auth_set')}}</span>
 			<el-button type="text" style="float: right;padding: 3px 0">
 				<router-link to="/manage/manage-add">
-				    添加商户
+				    {{$t('manage.add_manage')}}
 				</router-link>
 			</el-button>
 		</div>
         <div>
             <div style="min-height: 580px;">
 				<el-table  :data="groupList">
-					<el-table-column prop="name" label="公司名称"></el-table-column>
-					<el-table-column prop="username" label="主账户名称"></el-table-column>
-					<el-table-column prop="email" label="公司邮箱"></el-table-column>
-					<el-table-column prop="mobile" label="手机号"></el-table-column>
-				    <el-table-column label="创建时间">
+					<el-table-column prop="name" :label="$t('manage.company_name')"></el-table-column>
+					<el-table-column prop="username" :label="$t('manage.company_master')"></el-table-column>
+					<el-table-column prop="email"  :label="$t('manage.email')"></el-table-column>
+					<el-table-column prop="mobile" :label="$t('profile.mobile')"></el-table-column>
+				    <el-table-column :label="$t('home.creat_time')">
 				        <template slot-scope="scope">
 				            <i class="el-icon-time"></i>
 				            <span style="margin-left: 10px">{{ scope.row.date_added }}</span>
 				        </template>
 				    </el-table-column>
-					<el-table-column prop="action" label="操作" >
+					<el-table-column prop="action" :label="$t('operation')" min-width="250">
 						<template slot-scope="scope">
 							<el-button
 							  size="mini"
 							  type="primary"
-							  @click="handleEdit(scope.row)">配置权限</el-button>
+							  @click="handleEdit(scope.row)">{{$t('manage.set_auth')}}</el-button>
 							 <el-button
 							   size="mini"
 							   type="warning"
-							   @click="handleEditAccount(scope.row)">编辑账户</el-button>
+							   @click="handleEditAccount(scope.row)">{{$t('manage.edit_account')}}</el-button>
 						</template>
 					</el-table-column>
 				</el-table>
@@ -43,12 +43,12 @@
 			  @current-change='pageChange'>
 			</el-pagination>
         </div>
-        <el-dialog :visible.sync="showEdit" width='375px' :mask-closable='false' :title="store_id?'权限修改':'添加权限组'"  @on-ok='confirmModal'>
-            <el-input readonly v-model="authName"prefix="ios-contact" placeholder="请输入权限组名称" style="margin-bottom: 30px" />
+        <el-dialog :visible.sync="showEdit" width='375px' :mask-closable='false' :title="store_id?$t('manage.add_auth'):$t('manage.add_auth_group')"  @on-ok='confirmModal'>
+            <el-input readonly v-model="authName"prefix="ios-contact" :placeholder="$t('manage.input_auth_group')" style="margin-bottom: 30px" />
             <el-tree ref="authTree" :data="userAuth" show-checkbox node-key="id"  :default-checked-keys="selectAuthId"></el-tree>
 			<span slot="footer" class="dialog-footer">
-				<el-button @click="showEdit = false">取 消</el-button>
-				<el-button type="primary" @click="confirmModal">确 定</el-button>
+				<el-button @click="showEdit = false">{{$t('cancel_text')}}</el-button>
+				<el-button type="primary" @click="confirmModal">{{$t('ok_text')}}</el-button>
 			  </span>
         </el-dialog>
     </el-card>    

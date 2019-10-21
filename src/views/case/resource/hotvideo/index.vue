@@ -6,27 +6,36 @@
 		type='primary'
 		size='large'
 		circle
-		title='点击返回话题列表'
+		:title="$t('casemanage.back_ht')"
 		style="position: fixed;right: 50px;bottom: 30px; z-index: 999; width: 50px; height: 50px;"></el-button>
 		<div v-infinite-scroll="handleReachBottom"  class="infinite-list" :style="{height:`${height}px`,marginTop:'20px'}" v-show='!showDetails' infinite-scroll-immediate='false'>
-			<waterfall :col='6' :data="hotVideoList">
-				<el-card dis-hover v-for="(item, index) in hotVideoList" :key="index" class='videoCard' style="width:97%;display:inline-block;">
-					<div>
-						<!-- <svg-icon icon-class="fire" v-if="index<3" style="font-size:28px" />
-						<div style="width: 28px;" v-else></div>
-						<span style="font-size: 18px; margin-right: 10px;">{{index+1}}.</span> -->
-						<p class="desc">
-							<!-- 热点名称： -->
-							<a title="点击查看热点内视频" href="javascript:void(0);"  @click='readDetails(item.douyin_hotspot_id)'>#{{item.name}}#</a>
+			<el-card shadow="hover" v-for="(item, index) in hotVideoList" :key="index" class='videoCard' style="margin-bottom: 20px;">
+				<el-row type="flex" align="middle">
+					<el-col :span='3'>
+						<div style="display:inline-flex; align-items: center;">
+							<svg-icon icon-class="fire" style='color:#FF7530;font-size:28px' v-if='index+1<4' />
+							<div style="width: 28px;" v-else></div>
+							<span style="font-size: 18px; margin-right: 10px;">{{index+1}}.</span>
+							<!-- <img :src="item.cover_list.url_list[0]" alt="" width="70px"> -->
 							<el-image 
-								style="margin-top:10px"
-								:src="item.cover_list.url_list[0]"
+								style="width: 70px;"
+								:src="item.cover_list.url_list[0]" 
 								:preview-src-list="[item.cover_list.url_list[0]]">
 							</el-image>
-						</p>
-					</div>
-				</el-card>
-			</waterfall>
+						</div>
+					</el-col>
+					<el-col :span='15'>
+						<div style="display:inline-flex;height:70px; align-items: center;">
+							<p class="desc" style="margin-left:30px">{{$t('hotTrack.hot_spot_name')}}：<a title="点击查看热点内视频" href="javascript:void(0);" @click='readDetails(item.douyin_hotspot_id)'>{{item.name}}</a></p>
+						</div>
+					</el-col>
+					<el-col :span='6'>
+						<div style="display:inline-flex;height:70px; align-items: center;">
+							<svg-icon icon-class="fire"  style='color:#FF7530' />{{$t('hotTrack.hot_value')}}：{{item.hot_value|formatNumberRgx}}
+						</div>
+					</el-col>
+				</el-row>
+			</el-card>
 		</div>
 		<Details :height='height' :challengeId='challengeId' v-if='showDetails'></Details>
 	</div>

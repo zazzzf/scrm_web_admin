@@ -9,33 +9,9 @@ export function logon(data) {
   })
 }
 
-export function forgetPassword(data) {
+  export function changepassword (data){
     return request({
-      url: 'merchant/user/forgetPassword',
-      method: 'POST',
-      data: qs.stringify(data)
-    })
-  }
-
-  export function confirmEmail(data) {
-    return request({
-      url: 'merchant/user/checkemail',
-      method: 'POST',
-      data: qs.stringify(data)
-    })
-  }
-
-  export function sendMail(data) {
-    return request({
-      url: 'merchant/user/sendMail',
-      method: 'POST',
-      data: qs.stringify(data)
-    })
-  }
-
-  export function register(data) {
-    return request({
-      url: 'merchant/user/register',
+      url: 'manager/user/changepassword',
       method: 'POST',
       data: qs.stringify(data)
     })

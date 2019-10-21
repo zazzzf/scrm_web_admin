@@ -2,13 +2,13 @@
     <div>
         <el-card>
             <span slot="header">
-				<el-page-header @back="cancelTik" :content="addDyData.inspiration_id?'编辑案例':'添加案例'"></el-page-header>
+				<el-page-header :title="$t('back')" @back="cancelTik" :content="addDyData.inspiration_id?$t('casemanage.edit_case'):$t('casemanage.add_case')"></el-page-header>
 			</span>
             <div>
                 <el-form  :rules='lgRules' ref="lgForm" style="padding:20px 50px" :model="addDyData" @submit.native.prevent>
                     <el-form-item :label='$t("form.videolinks")' prop='videolinks'>
                         <el-input v-model="addDyData.videolinks" :disabled='addDyData.inspiration_id?true:false'>
-							<el-button :disabled='addDyData.inspiration_id?true:false' :loading="isBtnLoad" style="background:#409EFF;color:#fff" slot="append" icon="el-icon-search" @click='getTikTokUrl'>校验地址</el-button>
+							<el-button :disabled='addDyData.inspiration_id?true:false' :loading="isBtnLoad" style="background:#409EFF;color:#fff" slot="append" icon="el-icon-search" @click='getTikTokUrl'>{{$t('casemanage.check_url')}}</el-button>
 						</el-input>
                         <div v-if="tikJson.url">
 							<p>
@@ -19,8 +19,8 @@
 						</div>
                         <!-- <a :href="tikJson.url">{{tikJson.url}}</a> -->
                     </el-form-item>
-					<el-form-item label="标签" prop="tags">
-						<el-select style="width: 100%;" clearable  v-model="addDyData.tags" multiple  placeholder="标签选择">
+					<el-form-item :label="$t('casemanage.tag')" prop="tags">
+						<el-select style="width: 100%;" clearable  v-model="addDyData.tags" multiple  :placeholder="$t('casemanage.tag_chose')">
 							<el-option v-for="item in tagsList" :key="item.tag_id" :label="item.name" :value="item.tag_id"></el-option>
 						</el-select>
 					</el-form-item>
@@ -38,7 +38,7 @@
                     </el-form-item>
                     <el-form-item>
                         <div style="padding:30px">
-							<el-button type="primary"  @click="addTikLg">{{tikJson.name?'确定':'请效验视频地址'}}</el-button>
+							<el-button type="primary"  @click="addTikLg">{{tikJson.name?$t('ok_text'):$t('casemanage.in_check_url')}}</el-button>
 							<!-- <el-button type="default"  @click="cancelTik">取消</el-button> -->
                         </div>
                     </el-form-item>
@@ -93,7 +93,7 @@ export default {
 		}
 	},
     methods:{
-         //取消上传
+         //{{$t('cancel_text')}}
             cancelTik() {
                 this.$refs['lgForm'].resetFields();
                 this.$router.push('/case');

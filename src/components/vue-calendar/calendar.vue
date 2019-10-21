@@ -195,7 +195,11 @@ export default {
     futureDayHide: {
       type: String,
       default: `2554387200`
-    }
+    },
+    topDateName:{
+			type: Array,
+			default: () => ["年", "月"]
+		}
   },
   created() {
     this.intStart();
@@ -264,7 +268,8 @@ export default {
     },
     getList: function(date, chooseDay, isChosedDay = true) {
       const [markDate, markDateMore] = this.forMatArgs();
-      this.dateTop = `${date.getFullYear()}年${date.getMonth() + 1}月`;
+       let dateArr = this.topDateName;
+      this.dateTop =  `${date.getFullYear()}${dateArr[0]}${date.getMonth() + 1}${dateArr[1]}`;
       let arr = timeUtil.getMonthList(this.myDate);
       for (let i = 0; i < arr.length; i++) {
         let markClassName = "";

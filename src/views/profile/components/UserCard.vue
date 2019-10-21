@@ -1,7 +1,10 @@
 <template>
   <el-card style="margin-bottom:20px;">
     <div slot="header" class="clearfix">
-      <span>个人信息</span>
+      <span>{{$t('profile.userinfo')}}</span>
+      <el-button type="text" style="float: right;padding: 3px 0" @click="showChange = true">
+				    {{$t('profile.change_password')}}
+			</el-button>
     </div>
 
     <div class="user-profile">
@@ -19,17 +22,31 @@
     </div>
     <el-divider />
     <div class="user-bio">
-      <p  class="text item">用户名 ： {{ user.username?user.username:'0000000' }}</p>
-      <p  class="text item">手机号 ： {{ user.mobile?user.mobile:'0000000' }}</p>
-      <p  class="text item">邮箱 ： {{ user.email?user.email:'0000000' }}</p>
+      <p  class="text item">{{$t('profile.username')}} ： {{ user.username?user.username:'0000000' }}</p>
+      <p  class="text item">{{$t('profile.mobile')}} ： {{ user.mobile?user.mobile:'0000000' }}</p>
+      <p  class="text item">{{$t('profile.email')}} ： {{ user.email?user.email:'0000000' }}</p>
     </div>
     <el-divider />
-    
+    <el-dialog :visible.sync="showChange" :title="$t('profile.change_password')">
+      <el-form ref="ruleForm" :model="formData" :rules="ruleform">
+        <el-form-item :label="$t('password')" prop="password">
+          <el-input  :placeholder="$t('profile.in_new_password')" v-model="formData.password" show-password></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('confirm_password')" prop="confirmPassword">
+          <el-input :placeholder="$t('profile.in_again_password')" v-model="formData.confirmPassword" show-password></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer">
+        <el-button type="primary" @click="changePassword">{{$t('ok_text')}}</el-button>
+        <el-button @click='showChange = false'>{{$t('cancel_text')}}</el-button>
+      </span>
+    </el-dialog>
   </el-card>
 </template>
 
 <script>
 import PanThumb from '@/components/PanThumb'
+import { changepassword } from "@/api/login.js";
 
 export default {
   components: { PanThumb },
@@ -44,6 +61,38 @@ export default {
           roles: ''
         }
       }
+    }
+  },
+  data(){
+    return{
+      showChange:false,
+      formData:{
+        password:'',
+        confirmPassword:'',
+      },
+      ruleform:{
+        password:[{ required: true,min:6, message: this.$t('profile.in_new_password'), trigger: 'change' }],
+        confirmPassword:[{ required: true, min:6, message: this.$t('profile.in_again_password'), trigger: 'change' }]
+      }
+    }
+  },
+  methods:{
+    changePassword(){
+      this.$refs['ruleForm'].validate(valid => {
+        if(valid&& this.formData.password === this.formData.confirmPassword){
+          let postData = {
+            password: this.formData.password,
+            confirmPassword: this.formData.confirmPassword,
+          };
+          changepassword(postData).then(res => {
+            this.$message.success(this.$t('message.edit_success'));
+            this.$refs['ruleForm'].resetFields();
+            this.showChange = false;
+          })
+        }else if(valid&& this.formData.password !== this.formData.confirmPassword){
+            this.$message.info(this.$t('profile.password_error'));
+        }
+      })
     }
   }
 }

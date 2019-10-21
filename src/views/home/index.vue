@@ -5,21 +5,24 @@
 			<el-col :xs="24" :sm="12" :lg="18">
 				<el-card :body-style="{ height: '400px' }">
 					<el-tabs v-model="activeName" @tab-click="handleClick">
-						<el-tab-pane label="待审核案例" name="case">
+						<el-tab-pane :label="$t('home.wait_case')" name="case">
 							<div style="height:300px; overflow: auto"><case-table></case-table></div>
 						</el-tab-pane>
-						<el-tab-pane label="待审核台本" name="script">
+						<el-tab-pane :label="$t('home.wait_script')" name="script">
 							<div style="height:300px; overflow: auto"><scriptTable></scriptTable></div>
 						</el-tab-pane>
-						<el-tab-pane label="待审核报告" name="report">
+						<el-tab-pane :label="$t('home.wait_report')" name="report">
 							<div style="height:300px; overflow: auto"><report-table></report-table></div>
 						</el-tab-pane>
-						<el-tab-pane label="待审核课程" name="fourth">待审核课程</el-tab-pane>
+						<el-tab-pane :label="$t('home.wait_class')" name="fourth">{{$t('home.wait_class')}}</el-tab-pane>
 					</el-tabs>
 				</el-card>
 			</el-col>
 			<el-col :xs="24" :sm="12" :lg="6">
-				<el-card :body-style="{ height: '400px' }"><Calendar></Calendar></el-card>
+				<el-card :body-style="{ height: '400px' }">
+					<Calendar  :markDate="['2019-07-01','2019-07-06']"
+					:textTop="weekName" :topDateName='topDateName'></Calendar>
+				</el-card>
 			</el-col>
 		</el-row>
 		<el-card style='margin-top:20px'>
@@ -57,6 +60,12 @@ export default {
 	computed: {
 		listenshowpage: function() {
 			return this.$store.state.app.language;
+		},
+		weekName:function(){
+			return [this.$t('w7'),this.$t('w1'),this.$t('w2'),this.$t('w3'),this.$t('w4'),this.$t('w5'),this.$t('w6')]
+		},
+		topDateName:function(){
+			return [this.$t('year'),this.$t('month')]
 		}
 	},
 	methods: {

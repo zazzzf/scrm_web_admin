@@ -1,14 +1,14 @@
 <template>
 	<el-card>
 		<span slot="header">
-			<el-page-header
+			<el-page-header :title="$t('back')"
 				@back="
 					() => {
 						this.$refs['konwledgeForm'].resetFields();
 						this.$router.push('/sns');
 					}
 				"
-				:content="addKonwledgeData.knowledge_id?'编辑报告':'添加报告'"
+				:content="addKonwledgeData.knowledge_id?$t('casemanage.edit_report'):$t('casemanage.add_report')"
 			></el-page-header>
 		</span>
 		<div style="padding: 0 200px;">
@@ -16,14 +16,14 @@
 				
 				<el-form-item :label="$t('knowledge.type')" prop="type">
 					<el-select v-model="addKonwledgeData.type">
-						<el-option label="行业报告" :value="1"></el-option>
-						<el-option label="专家访谈" :value="2"></el-option>
+						<el-option :label="$t('casemanage.industry_report')" :value="1"></el-option>
+						<el-option :label="$t('casemanage.expert_interview')" :value="2"></el-option>
 					</el-select>
 				</el-form-item>
 				<el-form-item :label="$t('knowledge.title')" prop="title"><el-input v-model="addKonwledgeData.title"></el-input></el-form-item>
 				<el-form-item :label="$t('knowledge.description')" prop="description"><el-input v-model="addKonwledgeData.description" type="textarea"></el-input></el-form-item>
-				<el-form-item label="标签" prop="tags">
-					<el-select style="width: 100%;" clearable  v-model="addKonwledgeData.tags" multiple  placeholder="标签选择">
+				<el-form-item :label="$t('casemanage.tag')" prop="tags">
+					<el-select style="width: 100%;" clearable  v-model="addKonwledgeData.tags" multiple  :placeholder="$t('casemanage.tag_chose')">
 						<el-option v-for="item in tagsList" :key="item.tag_id" :label="item.name" :value="item.tag_id"></el-option>
 					</el-select>
 				</el-form-item>
@@ -34,7 +34,7 @@
 								style='width:200px' 
 								:preview-src-list="[`${addKonwledgeData.cover}?imageMogr2/auto-orient`]">
 							</el-image>
-							<el-button type="primary" @click='()=>{addKonwledgeData.cover = ""}'>重新上传</el-button>
+							<el-button type="primary" @click='()=>{addKonwledgeData.cover = ""}'>{{$t('casemanage.reupload')}}</el-button>
 						</div>
 						<el-upload
 							:action="uploadApi"
@@ -77,8 +77,8 @@
 				</el-form-item>
 				<el-form-item>
 					<div>
-						<el-button @click="cancelAddSns">取消上传</el-button>
-						<el-button type="primary" @click="uploadMiaopai">确认上传</el-button>
+						<el-button @click="cancelAddSns">{{$t('cancel_text')}}</el-button>
+						<el-button type="primary" @click="uploadMiaopai">{{$t('ok_text')}}</el-button>
 					</div>
 				</el-form-item>
 			</el-form>

@@ -10,13 +10,13 @@
         <el-col :span="18" :xs="24">
           <el-card style="max-height:820px">
             <el-tabs v-model="activeTab">
-              <el-tab-pane lazy label="收藏的热门视频" name="account">
+              <el-tab-pane lazy :label="$t('profile.sc_video')" name="account">
                 <HotVideo  :height='scheight'></HotVideo>
               </el-tab-pane>
-              <el-tab-pane label="收藏的热点话题视频" name="account1">
+              <el-tab-pane :label="$t('profile.sc_challenge')" name="account1">
                 <HotChallenge  :height='scheight'></HotChallenge>
               </el-tab-pane>
-              <el-tab-pane label="收藏的热点视频" name="account2">
+              <el-tab-pane :label="$t('profile.sc_hotspot')" name="account2">
                 <HotSpotVideo  :height='scheight'></HotSpotVideo>
               </el-tab-pane>
             </el-tabs>

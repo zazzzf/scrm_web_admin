@@ -2,14 +2,14 @@
 	<div>
 		<el-card>
 			<span slot="header">
-				<el-page-header @back="cancelScript" :content="scriptData.script_id?'编辑台本':'添加台本'"></el-page-header>
+				<el-page-header :title="$t('back')" @back="cancelScript" :content="scriptData.script_id?$t('casemanage.edit_script'):$t('casemanage.add_script')"></el-page-header>
 			</span>
 			<div style="max-width: 1000px;">
 			    <el-form  :rules='lgRules' ref="lgForm" style="padding:20px 50px" :model="scriptData" label-position="top" @submit.native.prevent>
-			        <el-form-item label='标题' prop='title'>
+			        <el-form-item :label="$t('profile.title')" prop='title'>
 			            <el-input v-model="scriptData.title"></el-input>
 			        </el-form-item>
-					<el-form-item label="封面" prop='cover'>
+					<el-form-item :label="$t('casemanage.cover')" prop='cover'>
 						<el-upload
 						  class="avatar-uploader"
 						  action="http://up-z1.qiniup.com"
@@ -25,18 +25,18 @@
 						  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
 						</el-upload>
 					</el-form-item>
-			        <el-form-item label='内容' prop='content'>
+			        <el-form-item :label="$t('form.content')" prop='content'>
 						<textEditor :content='scriptData.content' @on-change='getText'></textEditor>
 			        </el-form-item>
-					<el-form-item label="标签" prop="tags">
-						<el-select style="width: 100%;" clearable  v-model="scriptData.tags" multiple  placeholder="标签选择">
+					<el-form-item :label="$t('casemanage.tag')" prop="tags">
+						<el-select style="width: 100%;" clearable  v-model="scriptData.tags" multiple  :placeholder="$t('casemanage.tag_chose')">
 							<el-option v-for="item in tagsList" :key="item.tag_id" :label="item.name" :value="item.tag_id"></el-option>
 						</el-select>
 					</el-form-item>
 					<el-form-item>
 						<div>
-							<el-button @click="cancelScript">取消上传</el-button>
-							<el-button type="primary" @click="confirmCommit">确认上传</el-button>
+							<el-button @click="cancelScript">{{$t('cancel_text')}}</el-button>
+							<el-button type="primary" @click="confirmCommit">{{$t('ok_text')}}</el-button>
 						</div>
 					</el-form-item>
 			    </el-form>
@@ -78,7 +78,7 @@
 			getText(val){
 				this.scriptData.content = val;
 			},
-         //取消上传
+         //{{$t('cancel_text')}}
             cancelScript() {
                 this.$refs['lgForm'].resetFields();
                 this.$router.push('/case/script-manage');

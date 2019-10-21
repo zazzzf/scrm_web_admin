@@ -1,41 +1,41 @@
 <template>
 	<el-card>
 		<span slot="header">
-			<el-page-header
+			<el-page-header :title="$t('back')"
 				@back="getBackManage"
-				content="主号设置"
+				:content="$t('manage.master_set')"
 			></el-page-header>
 		</span>
 		<div style="padding: 0 200px;">
 			<el-form :rules="manageRules" ref="manageForm" :model="manageData" label-width="100px">
-				<el-form-item label="邮箱" prop="email">
+				<el-form-item :label="$t('profile.email')" prop="email">
 					<el-input v-model="manageData.email"></el-input>
 				</el-form-item>
-				<el-form-item label="姓名" prop="userName">
+				<el-form-item :label="$t('manage.username')" prop="userName">
 					<el-input v-model="manageData.userName"></el-input>
 				</el-form-item>
-				<el-form-item label="公司名称" prop="enterpriseName">
+				<el-form-item :label="$t('manage.company_name')"  prop="enterpriseName">
 					<el-input v-model="manageData.enterpriseName" :readonly="enterpriseNameReadonly"></el-input>
 				</el-form-item>
 				<el-switch
 					v-if="manageData.userId"
 				    v-model="ischangePassword"
 				    style="margin-bottom:20px"
-				    active-text="改密"
-				    inactive-text="不改密">
+				    :active-text="$t('manage.change_password')"
+				    :inactive-text="$t('manage.unchange_password')">
 				</el-switch>
 				<template v-if="!manageData.userId||manageData.userId&&ischangePassword">
-					<el-form-item label="密码" prop="password">
+					<el-form-item :label="$t('password')" prop="password">
 						<el-input v-model="manageData.password" :readonly='noFocus' show-password @focus='passwordBug()'></el-input>
 					</el-form-item>
-					<el-form-item label="确认密码" prop="confirmPassword">
+					<el-form-item :label="$t('confirm_password')" prop="confirmPassword">
 						<el-input v-model="manageData.confirmPassword" :readonly='noFocus' show-password></el-input>
 					</el-form-item>
 				</template>
 			</el-form>
 			<div class="footer">
-				<el-button type="primary" @click='commitManage'>确认</el-button>
-				<el-button type="default" @click="getBackManage">取消</el-button>
+				<el-button type="primary" @click='commitManage'>{{$t('ok_text')}}</el-button>
+				<el-button type="default" @click="getBackManage">{{$t('cancel_text')}}</el-button>
 			</div>
 		</div>
 	</el-card>

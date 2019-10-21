@@ -10,22 +10,22 @@
 				</el-col>
 				<el-col :xs="24" :sm="24" :md="24" :lg="15">
 					<div>
-						<p class="desc">标题：<a :href="item.share_url" target="_blank" title="点击此处浏览视频">{{item.desc}}</a></p>
-						<p class="desc">播主：{{item.nickname}}</p>
+						<p class="desc">{{$t('profile.title')}}：<a :href="item.share_url" target="_blank" title="点击此处浏览视频">{{item.desc}}</a></p>
+						<p class="desc">{{$t('profile.anchor')}}：{{item.nickname}}</p>
 					</div>
 				</el-col>
 				<el-col :xs="24" :sm="24" :md="24" :lg="6">
 					<div>
 						<p class="desc">
-							<svg-icon icon-class="fire" :size='20' style='color:#FF7530' />下载数：{{item.download_count|formatNumberRgx}}
-							<svg-icon icon-class="fire" :size='18' style='color:#FF7530' />点赞数：{{item.digg_count|formatNumberRgx}}
+							<svg-icon icon-class="fire" :size='20' style='color:#FF7530' />{{$t('profile.download_count')}}：{{item.download_count|formatNumberRgx}}
+							<svg-icon icon-class="fire" :size='18' style='color:#FF7530' />{{$t('profile.digg_count')}}：{{item.digg_count|formatNumberRgx}}
 						</p>
 						<p class="desc">
-							<svg-icon icon-class="fire" :size='18' style='color:#FF7530' />评论数：{{item.comment_count|formatNumberRgx}}
-							<svg-icon icon-class="fire" :size='18' style='color:#FF7530' />转发数：{{item.forward_count|formatNumberRgx}}
+							<svg-icon icon-class="fire" :size='18' style='color:#FF7530' />{{$t('profile.comment_count')}}：{{item.comment_count|formatNumberRgx}}
+							<svg-icon icon-class="fire" :size='18' style='color:#FF7530' />{{$t('profile.forward_count')}}：{{item.forward_count|formatNumberRgx}}
 						</p>
-						<el-button type="primary" size="mini" @click='toForward(item.share_url)'>发布案例</el-button>
-						<el-button type="success" size="mini" ><a :href="item.share_url" target="_blank" title="点击此处浏览视频" style="color:#fff">播放</a></el-button>
+						<el-button type="primary" size="mini" @click='toForward(item.share_url)'>{{$t('profile.forward_case')}}</el-button>
+						<el-button type="success" size="mini" ><a :href="item.share_url" target="_blank" title="点击此处浏览视频" style="color:#fff">{{$t('play')}}</a></el-button>
 					</div>
 				</el-col>
 			</el-row>

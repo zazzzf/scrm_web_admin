@@ -1,5 +1,4 @@
 <template>
-	<!-- content 编辑器内容  menus 编辑器工具栏  默认全部 -->
 	<div class="editor">
 		<div class="header">
 			<div id="div1" class="toolbar"></div>
@@ -16,7 +15,7 @@
 				:on-progress="onFileProgress"
 				:on-success="handleSuccessUpload"
 			>
-				<el-button  size="small" type="primary">上传视频</el-button>
+				<el-button  size="small" type="primary">{{$t('material.upload_video')}}</el-button>
 			</el-upload>
 			<span v-if="uploadLoading">{{ uploadSpeed }}</span>
 			<el-progress v-if="uploadLoading" :percentage="progressNum"></el-progress>
@@ -133,7 +132,7 @@ export default {
 						})
 					})
 				
-				    // 上传代码返回结果之后，将图片插入到编辑器中
+				    // 上传代码返回结果之后，将图片插入到{{$t('edit')}}器中
 				}
 			};
 			editor.create();

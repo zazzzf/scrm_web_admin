@@ -7,19 +7,19 @@
         <div>
             <el-table :data="userList">
 				<el-table-column prop="manage_user_id" label="ID" ></el-table-column>
-				<el-table-column prop="username" label="用户名" ></el-table-column>
-				<el-table-column prop="mobile" label="手机号"></el-table-column>
-				<el-table-column prop="action" label="操作" min-width="200" >
+				<el-table-column prop="username" :label="$t('profile.username')" ></el-table-column>
+				<el-table-column prop="mobile" :label="$t('profile.mobile')"></el-table-column>
+				<el-table-column prop="action" :label="$t('operation')" min-width="200" >
 					<template slot-scope="scope"    >
                         <el-button
 						  size="mini"
 						  type="primary"
-						  @click="handleEdit(scope.row)">编辑</el-button>
+						  @click="handleEdit(scope.row)">{{$t('edit')}}</el-button>
 						<el-button
 						  size="mini"
 						  type="danger"
                           v-if="scope.row.manage_user_id!==1"
-						  @click="handleDelete(scope.row.manage_user_id)">删除</el-button>
+						  @click="handleDelete(scope.row.manage_user_id)">{{$t('delete')}}</el-button>
 					</template>
                     
 				</el-table-column>
@@ -39,7 +39,7 @@
         :title="editId?'修改账号':'添加账号'"  
         :close-on-click-modal='false'>
             <el-form :model="userForm" :rules="rules" ref="userForm"  class="demo-ruleForm">
-                <el-form-item label="用户名" prop="username">
+                <el-form-item :label="$t('profile.username')" prop="username">
                     <el-input v-model="userForm.username" prefix="ios-contact" placeholder="请输入用户名"  />
                 </el-form-item>
                 <el-switch
@@ -50,10 +50,10 @@
                     inactive-text="不改密">
                 </el-switch>
                 <template v-if="ischangePassword||!editId">
-                    <el-form-item label="密码" prop="password">
+                    <el-form-item :label="$t('password')" prop="password">
                         <el-input v-model="userForm.password" show-password prefix="ios-contact" placeholder="请输入密码"  />
                     </el-form-item>
-                    <el-form-item label="确认密码" prop="confirmPassword">
+                    <el-form-item :label="$t('confirm_password')" prop="confirmPassword">
                         <el-input v-model="userForm.confirmPassword" show-password  prefix="ios-contact" placeholder="请输入确认密码"  />
                     </el-form-item>
                 </template>

@@ -7,29 +7,29 @@
 		<div class="search-box">
 			<el-form  ref="searchForm" :model="searchData" inline="">
 				<el-form-item prop="title">
-					<el-input v-model="searchData.title" style="width: 300px;" placeholder="标题搜索"></el-input>
+					<el-input v-model="searchData.title" style="width: 300px;" :placeholder="$t('search.title')"></el-input>
 				</el-form-item>
 				<el-form-item prop="tag">
-					<el-select clearable  v-model="searchData.tag" multiple collapse-tags  placeholder="标签筛选">
+					<el-select clearable  v-model="searchData.tag" multiple collapse-tags  :placeholder="$t('search.tag')">
 						<el-option v-for="item in tagsList" :key="item.tag_id" :label="item.name" :value="item.tag_id"></el-option>
 					</el-select>
 				</el-form-item>
 				<el-form-item prop="status">
-					<el-select clearable  v-model="searchData.status" placeholder="审核状态">
-						<el-option label="通过" :value="1"></el-option>
-						<el-option label="未通过" :value="-1"></el-option>
-						<el-option label="待审核" :value="0"></el-option>
+					<el-select clearable  v-model="searchData.status" :placeholder="$t('search.check_status')">
+						<el-option :label="$t('search.pass')" :value="1"></el-option>
+						<el-option :label="$t('search.nopass')" :value="-1"></el-option>
+						<el-option :label="$t('home.wait_pass')" :value="0"></el-option>
 					</el-select>
 				</el-form-item>
 				<el-form-item prop="industry">
 					<el-select clearable  v-model="searchData.industry" placeholder="类型筛选">
-						<el-option label="行业报告" :value="1"></el-option>
-						<el-option label="专家访谈" :value="2"></el-option>
+						<el-option :label="$t('casemanage.industry_report')" :value="1"></el-option>
+						<el-option :label="$t('casemanage.expert_interview')" :value="2"></el-option>
 					</el-select>
 				</el-form-item>
 				<el-form-item>
-					<el-button type="primary" @click='handleSearch'>搜索</el-button>
-					<el-button type="text" @click='resetSearch'>重置</el-button>
+					<el-button type="primary" @click='handleSearch'>{{$t('table.search')}}</el-button>
+					<el-button type="text" @click='resetSearch'>{{$t('search.reset')}}</el-button>
 				</el-form-item>
 			</el-form>
 		</div>
@@ -37,22 +37,22 @@
 			<el-table :data="snsList">
 				<el-table-column label="报告标题" prop="title" min-width="400"></el-table-column>
 				
-				<el-table-column label="状态">
+				<el-table-column :label="$t('home.status')">
 					<template slot-scope="scope">
-						<el-tag type="success" v-if="scope.row.status == 1">已通过</el-tag>
-						<el-tag type="danger" v-if="scope.row.status == -1">已拒绝</el-tag>
-						<el-tag type="default" v-if="scope.row.status == 0">待审核</el-tag>
+						<el-tag type="success" v-if="scope.row.status == 1">{{$t('home.is_pass')}}</el-tag>
+						<el-tag type="danger" v-if="scope.row.status == -1">{{$t('home.not_pass')}}</el-tag>
+						<el-tag type="default" v-if="scope.row.status == 0">{{$t('home.wait_pass')}}</el-tag>
 					</template>
 				</el-table-column>
-				<el-table-column label="创建人" prop="username"></el-table-column>
-				<el-table-column label="审核人" prop="check_manager"></el-table-column>
-				<el-table-column label="创建时间" prop="created" min-width="120"></el-table-column>
-				<el-table-column label="操作" min-width="300">
+				<el-table-column :label="$t('home.creat_name')" prop="username"></el-table-column>
+				<el-table-column :label="$t('checkname')" prop="check_manager"></el-table-column>
+				<el-table-column :label="$t('home.creat_time')" prop="created" min-width="120"></el-table-column>
+				<el-table-column :label="$t('operation')" min-width="300">
 					<template slot-scope="scope">
-						<el-button size="mini" type="info" @click="readSns(scope.row)" round>查看</el-button>
-						<el-button size="mini" type="warning" round @click="checkedSns(scope.row)">审核</el-button>
-						<el-button size="mini" round type="primary" @click="editSns(scope.row)">编辑</el-button>
-						<el-button size="mini" type="danger" round @click="deleteSns(scope.row.knowledge_id)">删除</el-button>
+						<el-button size="mini" type="info" @click="readSns(scope.row)" round>{{$t('search.read')}}</el-button>
+						<el-button size="mini" type="warning" round @click="checkedSns(scope.row)">{{$t('search.checked')}}</el-button>
+						<el-button size="mini" round type="primary" @click="editSns(scope.row)">{{$t('edit')}}</el-button>
+						<el-button size="mini" type="danger" round @click="deleteSns(scope.row.knowledge_id)">{{$t('delete')}}</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -61,7 +61,7 @@
 		<el-dialog :visible.sync="readSnsShow" top="2vh" min-width="375px">
 			<el-form style="margin:20px 0" label-width="130px" >
 				<el-form-item label="社交报告标题">{{ readSnsData.title }}</el-form-item>
-				<el-form-item label="封面">
+				<el-form-item :label="$t('casemanage.cover')">
 					<img :src='readSnsData.cover' width="100px" />
 				</el-form-item>
 				<el-form-item label="社交报告类型">
@@ -69,9 +69,9 @@
 					<el-tag type="warning" v-if="readSnsData.type == 2">专家访谈</el-tag>
 				</el-form-item>
 				<el-form-item label="社交报告状态">
-					<el-tag type="success" v-if="readSnsData.status == 1">已通过</el-tag>
-					<el-tag type="danger" v-if="readSnsData.status == -1">已拒绝</el-tag>
-					<el-tag type="default" v-if="readSnsData.status == 0">待审核</el-tag>
+					<el-tag type="success" v-if="readSnsData.status == 1">{{$t('home.is_pass')}}</el-tag>
+					<el-tag type="danger" v-if="readSnsData.status == -1">{{$t('home.not_pass')}}</el-tag>
+					<el-tag type="default" v-if="readSnsData.status == 0">{{$t('home.wait_pass')}}</el-tag>
 				</el-form-item>
 				<el-form-item label="不通过原因" v-if="readSnsData.status == -1">{{ readSnsData.reason }}</el-form-item>
 				<el-form-item label="社交报告创建人">{{ readSnsData.username }}</el-form-item>
@@ -87,9 +87,9 @@
 			</el-form>
 			<div slot="footer" v-if="doWhat == 'checked'">
 				<el-input type="textarea" :rows="2" placeholder="若不通过,请输入审核不通过原因" style="margin-bottom: 10px;" v-model="nocheckedreason"></el-input>
-				<el-button type="primary" @click="checkedSnsStatus(1)">审核通过</el-button>
-				<el-button type="danger" @click="checkedSnsStatus(-1)">审核不通过</el-button>
-				<el-button type="default" @click="checkedSnsStatus()">取消审核</el-button>
+				<el-button type="primary" @click="checkedSnsStatus(1)">{{$t('search.pass')}}</el-button>
+				<el-button type="danger" @click="checkedSnsStatus(-1)">{{$t('search.nopass')}}</el-button>
+				<el-button type="default" @click="checkedSnsStatus()">{{$t('cancel_text')}}</el-button>
 			</div>
 		</el-dialog>
 	</el-card>

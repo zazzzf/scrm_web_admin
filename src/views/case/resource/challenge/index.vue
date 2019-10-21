@@ -2,12 +2,12 @@
 	<div>
 		<el-button @click="showDetails=false" 
 		v-if="showDetails" 
-		icon="el-icon-back"
+		icon="el-icon-caret-left"
 		type='primary'
 		size='large'
 		circle
-		title='点击返回话题列表'
-		style="position: fixed;right: 50px;bottom: 30px; z-index: 999; width: 50px; height: 50px;"></el-button>
+		:title="$t('casemanage.back_ht')"
+		style="position: fixed; left: 230px;top: 150px; z-index: 999; width: 50px; height: 50px;"></el-button>
 		<div v-infinite-scroll="handleReachBottom"  class="infinite-list" :style="{height:`${height}px`,marginTop:'20px'}" v-show='!showDetails'>
 			<el-card dis-hover v-for="(item, index) in hotVideoList" :key="index" class='videoCard' style="margin-bottom: 20px;">
 				<el-row type='flex' align='middle'>
@@ -21,9 +21,9 @@
 					</el-col>
 					<el-col :span='20'>
 						<div>
-							<p class="desc">标题：{{item.desc}}</p>
-							<p class="desc">关键词：
-								<a title="点击查看话题内视频" href="javascript:void(0);" @click='readDetails(item.douyin_challenge_list_id)'>#{{item.cha_name}}#</a>
+							<p class="desc">{{$t('profile.title')}}：{{item.desc}}</p>
+							<p class="desc">{{$t('profile.keyword')}}：
+								<a :title="$t('casemanage.read_video')" href="javascript:void(0);" @click='readDetails(item.douyin_challenge_list_id)'>#{{item.cha_name}}#</a>
 							</p>
 						</div>
 					</el-col>
