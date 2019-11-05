@@ -31,6 +31,7 @@
     "sass-loader": "^7.3.1",
     "style-loader": "^1.0.0",
     "svg-sprite-loader": "^4.1.6",
+    "view-design": "^4.0.2",
     "vue": "^2.5.2",
     "vue-calendar-component": "^2.8.2",
     "vue-count-to": "^1.0.13",

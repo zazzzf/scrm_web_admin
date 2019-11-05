@@ -127,9 +127,15 @@ export const constantRoutes = [
 	{
 		path: 'resource',
 		name: 'resource',
-		component: () => import('@/views/case/resource'),
+		component: () => import('@/views/case/kasiData'),
 		meta: { title: 'resource', icon: 'mange', affix: true }
 	},
+	// {
+	// 	path: 'resourceData',
+	// 	name: 'resourceData',
+	// 	component: () => import('@/views/case/kasiData'),
+	// 	meta: { title: 'resourceData', icon: 'mange', affix: true }
+	// },
   	]
   },
   {
@@ -158,7 +164,8 @@ export const constantRoutes = [
   	path: '/course',
   	component: Layout,
   	redirect: '/course/course-manage',
-  	name: 'course',
+	  name: 'course',
+	  hidden: true,
   	meta: { title: 'course', icon: 'huiyuan' },
     children: [
   	{

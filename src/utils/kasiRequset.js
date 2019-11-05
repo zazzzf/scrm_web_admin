@@ -1,32 +1,25 @@
 import axios from 'axios'
-import { MessageBox, Message, Loading } from 'element-ui'
+import { Message } from 'element-ui'
 import store from '@/store'
-import { getToken } from '@/utils/auth'
+import {getToken} from '@/utils/auth'
 
 // create an axios instance
 const service = axios.create({
-  baseURL: 'http://scrm-api.shifuhui.net/index.php?s=', // url = base url + request url
+  baseURL: 'http://scrm-api-dev.shifuhui.net/index.php?s=', // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
-  timeout: 50000, // request timeout
+  timeout: 5000, // request timeout
 })
 
 // request interceptor
-var loading
-const option = {
-  target: '.app-main', //只在内容块请求时显示加载
-  customClass:'full-loading',
-  // background: 'rgba(0,0,0,0.2)'
-}
+
 service.interceptors.request.use(
   config => {
-    loading = Loading.service(option);
-	loading.close();
     // do something before request is sent
     if (store.getters.token) {
       // let each request carry token
       // ['X-Token'] is a custom headers key
       // please modify it according to the actual situation
-      config.headers['Authorization'] = getToken()
+        config.headers['Authorization'] = getToken()
     }
     return config
   },
@@ -56,30 +49,14 @@ service.interceptors.response.use(
     * 如通过xmlhttprequest 状态码标识 逻辑可写在下面error中
     */
     // if the custom code is not 20000, it is judged as an error.
-    if (res.code && res.code !== 0) {
-      loading.close();
+    if (res.status_code && res.status_code !== 200) {
       Message({
         message: res.message || 'Error',
         type: 'error',
         duration: 5 * 1000
       })
-
-      // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
-      if (res.code === 1000 ) {
-            MessageBox.confirm('你已被登出，可以取消继续留在该页面，或者重新登录', '确定登出', {
-              confirmButtonText: '重新登录',
-              cancelButtonText: '取消',
-              type: 'warning'
-            }).then(() => {
-              store.dispatch('user/logout').then(() => {
-                location.reload();// 为了重新实例化vue-router对象 避免bug
-              });
-            })
-          }
-        return Promise.reject('error');
-      
+      return Promise.reject('error');
     } else {
-	  loading.close();
       return res
     }
   },

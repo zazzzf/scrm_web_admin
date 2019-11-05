@@ -66,5 +66,13 @@ caseApi.getList = function(data){
     })
   }
   
+  caseApi.checkTikTok = function(data){
+    return request({
+      url: 'manager/Inspiration/checkTikTok',
+      method: 'POST',
+      data: qs.stringify(data),
+    })
+  }
+  
   
 export default caseApi;
