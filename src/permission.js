@@ -5,6 +5,8 @@ import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 import { getToken } from '@/utils/auth' // get token from cookie
 import getPageTitle from '@/utils/get-page-title'
+import Cookies from 'js-cookie'
+import {GetUrlRelativePath} from "@/utils/relurl.js"
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
@@ -27,14 +29,25 @@ router.beforeEach(async(to, from, next) => {
       next({ path: '/' })
       NProgress.done()
     } else {
-      const hasGetUserInfo = store.getters.name
-      if (hasGetUserInfo) {
+      const hasGetUserInfo = store.getters.tagList
+      if (hasGetUserInfo.length>0) {
         next()
       } else {
         try {
           // get user info
-          await store.dispatch('user/getTags')
+          
 
+          await store.dispatch('user/getTags')
+          await store.dispatch('user/getCategory')
+
+          var role = Cookies.get('role')
+          var roles = [role]
+          const fromPath = GetUrlRelativePath(window.location.href)
+          store.dispatch('GenerateRoutes', { roles }).then(() => { // 生成可访问的路由表
+              router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
+              // next({ ...to, replace: true }) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
+              next({ path: fromPath })
+          })
           next()
         } catch (error) {
           // remove token and go to login page to re-login

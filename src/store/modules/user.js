@@ -1,5 +1,6 @@
 import {  logon } from '@/api/login'
 import tagsApi from '@/api/tags'
+import {categoryApi} from '@/api/category'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 import Cookies from 'js-cookie'
@@ -8,6 +9,7 @@ const state = {
   name: '',
   avatar: '',
   tagList:[],
+  categoryList:[]
 }
 
 const mutations = {
@@ -22,6 +24,9 @@ const mutations = {
   },
   SET_TAGLIST: (state, data) => {
     state.tagList = data
+  },
+  SET_CATEGORY: (state,data) => {
+    state.categoryList = data
   }
 }
 
@@ -32,11 +37,19 @@ const actions = {
     return new Promise((resolve, reject) => {
       logon({ userName: userName.trim(), password: password }).then(response => {
         const { data } = response
-			Cookies.set('userName', data.userName, {expires: 7});
-		  Cookies.set('user_id', data.user_id, {expires: 7});
-		  Cookies.set('master', data.master, {expires: 7});
-		  Cookies.set('userinfo', JSON.stringify(data), {expires: 7});
+        Cookies.set('userName', data.username, {expires: 7});
+        Cookies.set('user_id', data.user_id, {expires: 7});
+        Cookies.set('master', data.master, {expires: 7});
+        Cookies.set('userinfo', JSON.stringify(data), {expires: 7});
         commit('SET_TOKEN', data.token)
+        console.log(data.username)
+        const userAdmin = ['diandian','admin','nick','heci','houlianjing','koko','xhl']
+        if(userAdmin.indexOf(data.username)>=0){
+          Cookies.set('role', 'admin', {expires: 7});
+        }else{
+          Cookies.set('role', 'editor', {expires: 7});
+        }
+
         setToken(data.token)
         resolve()
       }).catch(error => {
@@ -69,13 +82,7 @@ const actions = {
   // user logout
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
-      Cookies.remove('email');
-      Cookies.remove('store_id');
-      Cookies.remove('userName');
-      Cookies.remove('master');
-      Cookies.remove('user_id');
-      Cookies.remove('userinfo');
-      Cookies.remove('SCRM_PLATE_TOKEN');
+      commit('SET_TAGLIST', [])
       resolve();
       // this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     })
@@ -89,17 +96,29 @@ const actions = {
       resolve()
     })
   },
-	
+
 	// getTags
 	getTags({ commit, state }) {
 	  return new Promise((resolve, reject) => {
 	    tagsApi.tagList().then(response => {
 	      const { data } = response
-		  commit('SET_TAGLIST', data)
-	      resolve(data)
-	    }).catch(error => {
-	      reject(error)
-	    })
+        commit('SET_TAGLIST', data)
+          resolve(data)
+        }).catch(error => {
+          reject(error)
+        })
+	  })
+  },
+  	// getTags
+	getCategory({ commit, state }) {
+	  return new Promise((resolve, reject) => {
+	    categoryApi.categoryList().then(response => {
+	      const { data } = response
+        commit('SET_CATEGORY', data)
+          resolve(data)
+        }).catch(error => {
+          reject(error)
+        })
 	  })
 	}
 }

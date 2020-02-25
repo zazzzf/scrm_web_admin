@@ -3,23 +3,16 @@
 		<!-- :xs="24" :sm="12" :lg="6" -->
 		<el-row :gutter="20">
 			<el-col :xs="24" :sm="12" :lg="18">
+				<el-button style="padding: 10px 0;width:100%" type="primary" @click="quickVideo">快速发布</el-button>
 				<el-card :body-style="{ height: '400px' }">
-					<el-tabs v-model="activeName" @tab-click="handleClick">
-						<el-tab-pane :label="$t('home.wait_case')" name="case">
-							<div style="height:300px; overflow: auto"><case-table></case-table></div>
-						</el-tab-pane>
-						<el-tab-pane :label="$t('home.wait_script')" name="script">
-							<div style="height:300px; overflow: auto"><scriptTable></scriptTable></div>
-						</el-tab-pane>
-						<el-tab-pane :label="$t('home.wait_report')" name="report">
-							<div style="height:300px; overflow: auto"><report-table></report-table></div>
-						</el-tab-pane>
-						<el-tab-pane :label="$t('home.wait_class')" name="fourth">{{$t('home.wait_class')}}</el-tab-pane>
-					</el-tabs>
+					 <div slot="header" class="clearfix">
+						<span>待审核热点视频</span>
+					</div>
+					<div style="height:300px; overflow: auto"><case-table></case-table></div>
 				</el-card>
 			</el-col>
 			<el-col :xs="24" :sm="12" :lg="6">
-				<el-card :body-style="{ height: '400px' }">
+				<el-card :body-style="{ height: '430px' }"  header="日历">
 					<Calendar  :markDate="['2019-07-01','2019-07-06']"
 					:textTop="weekName" :topDateName='topDateName'></Calendar>
 				</el-card>
@@ -37,18 +30,15 @@ import 'echarts-wordcloud';
 import {storeIncrease} from '@/api/home';
 import Calendar from '@/components/vue-calendar/calendar.vue';
 import caseTable from './components/caseTable';
-import courseTable from './components/courseTable';
-import reportTable from './components/reportTable';
-import scriptTable from './components/scriptTable';
+// import courseTable from './components/courseTable';
+// import reportTable from './components/reportTable';
+// import scriptTable from './components/scriptTable';
 
 export default {
 	name: 'Dashboard',
 	components: {
 		Calendar,
 		caseTable,
-		courseTable,
-		reportTable,
-		scriptTable
 	},
 	data() {
 		return {
@@ -69,6 +59,14 @@ export default {
 		}
 	},
 	methods: {
+		quickVideo(){
+			this.$router.push({
+				name:"videoAdd",
+				params:{
+					quick: true
+				}
+			})
+		},
 		handleClick(tab) {},
 		drawstorerease() {
 			var xTitle = [];

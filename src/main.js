@@ -29,10 +29,10 @@ import md5 from 'js-md5';
  * Currently MockJs will be used in the production environment,
  * please remove it before going online! ! !
  */
-import { mockXHR } from '../mock'
-if (process.env.NODE_ENV === 'production') {
-  mockXHR()
-}
+// import { mockXHR } from '../mock'
+// if (process.env.NODE_ENV === 'production') {
+//   mockXHR()
+// }
 Vue.prototype.$md5 = md5;
 Vue.use(ElementUI, {
   size: Cookies.get('size') || 'medium', // set element-ui default size

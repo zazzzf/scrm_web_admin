@@ -87,7 +87,7 @@
 			coverSuccessUpload(response, file, fileList) {
 				let that = this;
 				if (response.hash && response.key) {
-					this.scriptData.cover = 'http://scrm-image-qn.shifuhui.net/' + response.key;
+					this.scriptData.cover = 'http://scrm-image-qn.xaxhl.net/' + response.key;
 				} else {
 					this.$message.error(response.error);
 				}

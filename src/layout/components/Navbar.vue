@@ -68,6 +68,8 @@ export default {
       Cookies.remove('userinfo');
       Cookies.remove('SCRM_PLATE_TOKEN');
       Cookies.remove('token');
+      Cookies.remove('role');
+      this.$store.dispatch('user/logout', [])
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     }
   },

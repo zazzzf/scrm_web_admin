@@ -1,12 +1,12 @@
 <template>
 	<div>
 		<el-table :data="caseList">
-			<el-table-column :label="$t('home.case_title')" prop="tiktok_video_name" min-width="400"></el-table-column>
+			<el-table-column label="推荐理由" prop="title" min-width="400"></el-table-column>
 			<el-table-column :label="$t('home.status')">
 				<template slot-scope="scope">
-					<el-tag type="success" v-if="scope.row.status == 1">{{$t('home.is_pass')}}</el-tag>
+					<el-tag type="success" v-if="scope.row.status == 2">{{$t('home.is_pass')}}</el-tag>
 					<el-tag type="danger" v-if="scope.row.status == -1">{{$t('home.not_pass')}}</el-tag>
-					<el-tag type="default" v-if="scope.row.status == 0">{{$t('home.wait_pass')}}</el-tag>
+					<el-tag type="default" v-if="scope.row.status == 1">{{$t('home.wait_pass')}}</el-tag>
 				</template>
 			</el-table-column>
 			<el-table-column :label="$t('home.creat_name')" prop="username" ></el-table-column>
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-	import {pendingChecKCase} from '@/api/home.js'
+	import {pendinghotvideo} from '@/api/home.js'
 	export default {
 		data(){
 			return{
@@ -25,7 +25,7 @@
 		},
 		methods:{
 			getList(){
-				pendingChecKCase().then(res => {
+				pendinghotvideo().then(res => {
 					this.caseList = res.data.list
 				})
 			}

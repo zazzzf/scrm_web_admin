@@ -5,7 +5,7 @@ import { getToken } from '@/utils/auth'
 
 // create an axios instance
 const service = axios.create({
-  baseURL: 'http://scrm-api.shifuhui.net/index.php?s=', // url = base url + request url
+  baseURL: 'http://scrm-api.xaxhl.net/index.php?s=', // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 50000, // request timeout
 })

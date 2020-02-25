@@ -128,7 +128,7 @@ export default {
 						formData.append('token',token)
 						formData.append('key',key)
 						uploadImg(formData).then(res=> {
-							insert('http://scrm-image-qn.shifuhui.net/' + res.key) 
+							insert('http://scrm-image-qn.xaxhl.net/' + res.key) 
 						})
 					})
 				
@@ -175,7 +175,7 @@ export default {
 			}
 			let that = this;
 			if (response.hash && response.key) {
-				var videoLink =  'http://scrm-video-qn.shifuhui.net/' + response.key;
+				var videoLink =  'http://scrm-video-qn.xaxhl.net/' + response.key;
 				var video = '<video src='+videoLink + 'controls="controls" width="100%"></video>'
 				
 				editor.txt.append(`<p><video src=${videoLink} controls="controls" style='width:100%;height:400px'></video><br></p>`);

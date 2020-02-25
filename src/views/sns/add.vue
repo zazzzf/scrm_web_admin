@@ -101,7 +101,7 @@ export default {
 			}
 		};
 		return {
-			// uploadApi: 'http://scrm-api.shifuhui.net/index.php?s=merchant/material/upload',
+			// uploadApi: 'http://scrm-api.xaxhl.net/index.php?s=merchant/material/upload',
 			uploadApi: 'http://up-z1.qiniup.com',
 			uploadSpeed: '0KB/s',
 			uploadData: {
@@ -208,7 +208,7 @@ export default {
 			let that = this;
 			if (response.hash && response.key) {
 				that.uploadNumber--;
-				this.addKonwledgeData.url = 'http://scrm-knowledge-qn.shifuhui.net/' + response.key;
+				this.addKonwledgeData.url = 'http://scrm-knowledge-qn.xaxhl.net/' + response.key;
 				if (that.uploadNumber == 0) {
 					this.$message.success(this.$t('material.upload_success'));
 					this.uploadLoading = false;
@@ -236,7 +236,7 @@ export default {
 			let that = this;
 			if (response.hash && response.key) {
 				this.progressData.num = 100;
-				this.addKonwledgeData.cover = 'http://scrm-image-qn.shifuhui.net/' + response.key;
+				this.addKonwledgeData.cover = 'http://scrm-image-qn.xaxhl.net/' + response.key;
 				this.progressData.num = 0;
 			} else {
 				this.$message.error(response.error);
