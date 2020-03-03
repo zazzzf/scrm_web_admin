@@ -6,7 +6,7 @@
       <div :class="{'fixed-header':fixedHeader}">
         <navbar />
       </div>
-      <app-main />
+      <app-main v-loading="loading > 0" />
     </div>
   </div>
 </template>
@@ -24,6 +24,9 @@ export default {
   },
   mixins: [ResizeMixin],
   computed: {
+    loading() {
+      return this.$store.state.app.loading
+    },
     sidebar() {
       return this.$store.state.app.sidebar
     },
@@ -32,6 +35,9 @@ export default {
     },
     fixedHeader() {
       return this.$store.state.settings.fixedHeader
+    },
+    userRole(){
+      return this.$store.state.user.userRole
     },
     classObj() {
       return {

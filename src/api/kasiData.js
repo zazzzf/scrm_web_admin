@@ -4,7 +4,7 @@ import qs from 'qs'
 let kasi = {};
 kasi.getTags = function(data) {
 	return request({
-		url: 'merchant/resource/getKSTag',
+		url: 'manager/resource/getKSTag',
         method: 'post',
         data: qs.stringify(data),
 	})
@@ -12,14 +12,14 @@ kasi.getTags = function(data) {
 
 kasi.getDates = function() {
 	return request({
-		url: 'merchant/resource/getKSPlatform',
+		url: 'manager/resource/getKSPlatform',
         method: 'get',
 	})
 }
 
 kasi.getData = function(data) {
 	return request({
-		url: 'merchant/resource/getKSRank',
+		url: 'manager/resource/getKSRank',
         method: 'post',
         data: qs.stringify(data),
 	})

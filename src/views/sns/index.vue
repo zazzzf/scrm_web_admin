@@ -23,8 +23,7 @@
 				</el-form-item>
 				<el-form-item prop="industry">
 					<el-select clearable  v-model="searchData.industry" placeholder="类型筛选">
-						<el-option :label="$t('casemanage.industry_report')" :value="1"></el-option>
-						<el-option :label="$t('casemanage.expert_interview')" :value="2"></el-option>
+						<el-option v-for="item in categoryList" :label="item.name" :value="item.category_id" :key="item.category_id"></el-option>
 					</el-select>
 				</el-form-item>
 				<el-form-item>
@@ -59,14 +58,13 @@
 		</div>
 		<el-pagination background v-if="pageData.count > 10" layout="prev, pager, next" :total="pageData.count" @current-change="pageChange"></el-pagination>
 		<el-dialog :visible.sync="readSnsShow" top="2vh" min-width="375px">
-			<el-form style="margin:20px 0" label-width="130px" >
+			<el-form style="margin:20px 0" label-width="130px" label-position="left">
 				<el-form-item label="社交报告标题">{{ readSnsData.title }}</el-form-item>
 				<el-form-item :label="$t('casemanage.cover')">
 					<img :src='readSnsData.cover' width="100px" />
 				</el-form-item>
 				<el-form-item label="社交报告类型">
-					<el-tag type="success" v-if="readSnsData.type == 1">行业报告</el-tag>
-					<el-tag type="warning" v-if="readSnsData.type == 2">专家访谈</el-tag>
+					<el-tag v-if="readSnsShow">{{ categoryList.find(element => element.category_id == readSnsData.type).name}}</el-tag>
 				</el-form-item>
 				<el-form-item label="社交报告状态">
 					<el-tag type="success" v-if="readSnsData.status == 1">{{$t('home.is_pass')}}</el-tag>
@@ -81,9 +79,11 @@
 					<el-tag v-for="item in readSnsData.tag" :key='item.tag_id'>{{item.name}}</el-tag>
 				</el-form-item>
 				<el-form-item label="社交报告">
-					<pdf :src='readSnsData.url' v-if="readSnsShow"></pdf>
-					<!-- <object :data="readSnsData.url" type="application/pdf" width="100%" height="800px">This browser does not support PDFs.</object> -->
+					<!-- <a :href="readSnsData.url" download="filename.zip">下载</a> -->
+					<!-- <el-button @click="()=>{}}">下载</el-button> -->
 				</el-form-item>
+				<iframe :src="readSnsData.url"  width="100%" height="800px"></iframe>
+				<!-- <pdf :src='readSnsData.url' v-if="readSnsShow"></pdf> -->
 			</el-form>
 			<div slot="footer" v-if="doWhat == 'checked'">
 				<el-input type="textarea" :rows="2" placeholder="若不通过,请输入审核不通过原因" style="margin-bottom: 10px;" v-model="nocheckedreason"></el-input>
@@ -98,11 +98,9 @@
 <script>
 import snsApi from '@/api/sns.js';
 import tagsApi from '@/api/tags.js';
-import pdf from '@/components/pdf/index.vue';
+// import pdf from '@/components/pdf/index.vue';
+
 export default {
-	components: {
-		pdf
-	},
 	data() {
 		return {
 			snsList: [],
@@ -125,6 +123,9 @@ export default {
 	computed:{
 		tagsList(){
 			return this.$store.getters.tagList
+		},
+		categoryList(){
+			return this.$store.getters.categoryList
 		}
 	},
 	methods: {

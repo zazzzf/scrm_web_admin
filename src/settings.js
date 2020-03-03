@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: 'SCRM管理平台',
+  title: 'SCS管理平台',
 
   /**
    * @type {boolean} true | false

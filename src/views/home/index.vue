@@ -3,23 +3,13 @@
 		<!-- :xs="24" :sm="12" :lg="6" -->
 		<el-row :gutter="20">
 			<el-col :xs="24" :sm="12" :lg="18">
-				<el-card :body-style="{ height: '400px' }">
-					<el-tabs v-model="activeName" @tab-click="handleClick">
-						<el-tab-pane :label="$t('home.wait_case')" name="case">
-							<div style="height:300px; overflow: auto"><case-table></case-table></div>
-						</el-tab-pane>
-						<el-tab-pane :label="$t('home.wait_script')" name="script">
-							<div style="height:300px; overflow: auto"><scriptTable></scriptTable></div>
-						</el-tab-pane>
-						<el-tab-pane :label="$t('home.wait_report')" name="report">
-							<div style="height:300px; overflow: auto"><report-table></report-table></div>
-						</el-tab-pane>
-						<el-tab-pane :label="$t('home.wait_class')" name="fourth">{{$t('home.wait_class')}}</el-tab-pane>
-					</el-tabs>
+				<el-card :body-style="{ height: '460px' }">
+					<el-button style="width: 100%" type="primary" @click="handleClick">快捷发布(热点视频)</el-button>
+					<div style="height:360px; overflow: auto"><hot-video-table></hot-video-table></div>
 				</el-card>
 			</el-col>
 			<el-col :xs="24" :sm="12" :lg="6">
-				<el-card :body-style="{ height: '400px' }">
+				<el-card :body-style="{ height: '400px' }" header="日历">
 					<Calendar  :markDate="['2019-07-01','2019-07-06']"
 					:textTop="weekName" :topDateName='topDateName'></Calendar>
 				</el-card>
@@ -36,19 +26,13 @@ import echarts from 'echarts';
 import 'echarts-wordcloud';
 import {storeIncrease} from '@/api/home';
 import Calendar from '@/components/vue-calendar/calendar.vue';
-import caseTable from './components/caseTable';
-import courseTable from './components/courseTable';
-import reportTable from './components/reportTable';
-import scriptTable from './components/scriptTable';
+import hotVideoTable from './components/hotVideoTable';
 
 export default {
 	name: 'Dashboard',
 	components: {
 		Calendar,
-		caseTable,
-		courseTable,
-		reportTable,
-		scriptTable
+		hotVideoTable,
 	},
 	data() {
 		return {
@@ -69,7 +53,14 @@ export default {
 		}
 	},
 	methods: {
-		handleClick(tab) {},
+		handleClick() {
+			this.$router.push({
+				name:"hotVideoAdd",
+				params:{
+					quick:true
+				}
+			})
+		},
 		drawstorerease() {
 			var xTitle = [];
 			var yData = [];

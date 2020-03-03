@@ -27,6 +27,11 @@ export default {
   position: relative;
   overflow: hidden;
 }
+@media(max-width: 768px){
+  .app-main{
+    padding: 0%;
+  }
+}
 .fixed-header+.app-main {
   padding-top: 50px;
 }

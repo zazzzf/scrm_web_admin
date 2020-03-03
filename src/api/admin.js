@@ -33,3 +33,38 @@ adminUser.editUser = function(data) {
 }
 
 export default adminUser;
+
+/**
+ * 分类管理接口
+ */
+
+export function categoryList(){
+	return request({
+		url: 'manager/category/categoryList',
+		method: 'get',
+	})
+ }
+
+ export function addcategory(data){
+	return request({
+		url: 'manager/category/add',
+		method: 'post',
+		data: qs.stringify(data)
+	})
+ }
+
+ export function editcategory(data){
+	return request({
+		url: 'manager/category/edit',
+		method: 'post',
+		data: qs.stringify(data)
+	})
+ }
+
+ export function delcategory(data){
+	return request({
+		url: 'manager/category/del',
+		method: 'post',
+		data: qs.stringify(data)
+	})
+ }

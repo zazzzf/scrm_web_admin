@@ -1,23 +1,9 @@
 import request from '@/utils/request'
 
 
-export function pendingChecKCase() {
+export function pendinghotvideo() {
 	return request({
-	  url: 'manager/dash_board/pendingChecKCase',
-	  method: 'GET',
-	})
-}
-
-export function pendingCheckScript() {
-	return request({
-	  url: 'manager/dash_board/pendingCheckScript',
-	  method: 'GET',
-	})
-}
-
-export function pendingCheckReport() {
-	return request({
-	  url: 'manager/dash_board/pendingCheckReport',
+	  url: 'manager/dash_board/pendinghotvideo',
 	  method: 'GET',
 	})
 }

@@ -108,6 +108,17 @@ export default {
 		tagsManage: '标签设置',
 		scriptLibrary:'台本库',
 		resource:'资源库',
+		classManage:'分类管理',
+		snsSet:'集合管理',
+		snsReport:'热点速报',
+
+		/**
+		 * 2019-11-08
+		 */
+		"热点排行":"热点排行",
+		"热点视频":"热点视频",
+		"internal":"内部报告",
+		"internalAdd":"添加报告",
 	},
 	setManage: {
 		edit_success: '修改成功',
@@ -171,7 +182,7 @@ export default {
 		format_error: '不支持此格式',
 		upload_error: '上传失败',
 		size_out: '超出限制',
-		upload_success: '已全部上传成功',
+		upload_success: '上传成功',
 		upload_miaopai: '上传秒拍',
 		add_video_source: '新增视频资源',
 		upload_video: '上传视频',
@@ -323,5 +334,37 @@ export default {
 		no_data:'此播主信息暂未收入',
 		//--------------10/12
 		hot_spot_name:'热点名称',
+
+		/**
+		 * 2019-11-08
+		 */
+		"edit_video":'编辑视频',
+		"add_video":'添加视频',
+		"chose_plate":"平台选择",
+		"tag":"标签",
+		"video_title":"推荐理由",
+		"script_text":"脚本",
+		"attributes":'属性方向',
+		"reason":"走红原因",
+		"bedding":"铺垫",
+		"normal_story":"正常故事",
+		"unexpected_story":"意外故事",
+		"scalable_scene":"可扩展场景",
+		"remarks":"备注",
+		"hot_review":"热评",
+		"video_link":"视频链接",
+		"submit":"提交",
+		"cancel":"取消",
+		"video_url":'视频',
+		"no_pass_reason":'不通过原因',
+	},
+	/**
+	 * 热点速报部分
+	 */
+	hot_report:{
+		"category_id": "分类",
+		"type_json": "分类数据",
+		"knowledge_set_id":"集合",
+		"analyze":"分析",
 	}
 }

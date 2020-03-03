@@ -27,7 +27,7 @@
       <p  class="text item">{{$t('profile.email')}} ： {{ user.email?user.email:'0000000' }}</p>
     </div>
     <el-divider />
-    <el-dialog :visible.sync="showChange" :title="$t('profile.change_password')">
+    <el-dialog :visible.sync="showChange" :title="$t('profile.change_password')" width="375px">
       <el-form ref="ruleForm" :model="formData" :rules="ruleform">
         <el-form-item :label="$t('password')" prop="password">
           <el-input  :placeholder="$t('profile.in_new_password')" v-model="formData.password" show-password></el-input>

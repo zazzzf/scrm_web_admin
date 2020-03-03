@@ -64,7 +64,7 @@
 		</el-pagination>
 		<el-dialog :visible.sync="readSnsShow" top='2vh' min-width='375px'>
 			<p style="font-size: 18px; text-align: center;">{{readSnsData.title}}</p>
-			<el-form style="margin:20px 0" label-width="130px" v-if="readSnsShow">
+			<el-form style="margin:20px 0" label-width="130px" v-if="readSnsShow" label-position="left">
 				<el-form-item :label="$t('title')">{{ readSnsData.title }}</el-form-item>
 				<el-form-item :label="$t('casemanage.cover')">
 					<img :src='readSnsData.cover' width="100px" />
@@ -82,8 +82,8 @@
 					<el-tag v-for="item in readSnsData.tag" :key='item.tag_id'>{{item.name}}</el-tag>
 				</el-form-item>
 				<el-form-item label="内容">
-					<div v-html="readSnsData.content"></div>
 				</el-form-item>
+					<div v-html="readSnsData.content"></div>
 			</el-form>
 			<div slot='footer' v-if="doWhat=='checked'">
 				<el-input type="textarea" :rows="2" placeholder="若不通过,请输入审核不通过原因" style="margin-bottom: 10px;" v-model="nocheckedreason"></el-input>
