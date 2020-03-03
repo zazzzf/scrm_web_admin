@@ -13,11 +13,9 @@
 		</span>
 		<div style="padding: 0 200px;">
 			<el-form :rules="miaopaiRules" ref="konwledgeForm" :model="addKonwledgeData" label-width="100px">
-				
 				<el-form-item :label="$t('knowledge.type')" prop="type">
 					<el-select v-model="addKonwledgeData.type">
-						<el-option :label="$t('casemanage.industry_report')" :value="1"></el-option>
-						<el-option :label="$t('casemanage.expert_interview')" :value="2"></el-option>
+						<el-option v-for="item in categoryList" :label="item.name" :value="item.category_id" :key="item.category_id"></el-option>
 					</el-select>
 				</el-form-item>
 				<el-form-item :label="$t('knowledge.title')" prop="title"><el-input v-model="addKonwledgeData.title"></el-input></el-form-item>
@@ -28,30 +26,16 @@
 					</el-select>
 				</el-form-item>
 				<el-form-item :label="$t('knowledge.cover')" prop="cover">
-						<div class="cover-read" v-if="addKonwledgeData.cover">
-							<el-image 
-								:src="`${addKonwledgeData.cover}?imageMogr2/auto-orient`" 
-								style='width:200px' 
-								:preview-src-list="[`${addKonwledgeData.cover}?imageMogr2/auto-orient`]">
-							</el-image>
-							<el-button type="primary" @click='()=>{addKonwledgeData.cover = ""}'>{{$t('casemanage.reupload')}}</el-button>
-						</div>
-						<el-upload
-							:action="uploadApi"
-							accept="image/png, image/jpeg, image/jpg"
-							v-if="!addKonwledgeData.cover"
-							name="file"
-							:max-size="5120"
-							drag
-							:before-upload="coverBeforeUpload"
-							:data="addKonwledgeData.qiniu"
-							:on-progress="onCoverProgress"
-							:on-success="coverSuccessUpload"
-						>
-								<i class="el-icon-upload"></i>
-								<div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-								<div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过4MB</div>
-						</el-upload>
+						
+						<image-upload :limit='1' 
+						:accept="'image/*'" 
+						:uploadType="1" 
+						:qiniuBaseUrl="$config.QINIU_URL_TYPE_IMG" 
+						:qiniuNamePrefix="'ZK_BG_'" 
+						:isAppendDialog="true" 
+						:propFileList="addKonwledgeData.cover?[{url:addKonwledgeData.cover+'?imageMogr2/auto-orient'}]:[]" 
+						@on-upSuccess="getImgLinks"></image-upload>
+						
 				</el-form-item>
 				<el-form-item :label="$t('knowledge.url')" prop="url">
 					<el-upload
@@ -90,8 +74,11 @@ import mpJson from '@/static/mpCategory.json';
 import Cookies from 'js-cookie';
 import { qiniuToken } from '@/api/token';
 import snsApi from '@/api/sns';
+import imageUpload from '@/components/image-upload'
+
 
 export default {
+	components:{imageUpload},
 	data() {
 		const validatePass = (rule, value, callback) => {
 			if (value.length == 0) {
@@ -170,6 +157,9 @@ export default {
 	computed:{
 		tagsList(){
 			return this.$store.getters.tagList
+		},
+		categoryList(){
+			return this.$store.getters.categoryList
 		}
 	},
 	methods: {
@@ -307,8 +297,11 @@ export default {
 			});
 		},
 		cancelAddSns() {
-			this.$refs['konwledgeForm'].resetFields();
+			// this.$refs['konwledgeForm'].resetFields();
 			this.$router.push('/sns');
+		},
+		getImgLinks(val){
+			this.addKonwledgeData.cover = val
 		},
 		isEdit(data){
 			if(data){
@@ -337,7 +330,7 @@ export default {
 			}
 		}
 	},
-	created() {
+	mounted() {
 		this.isEdit(this.$route.params.data)
 	}
 };

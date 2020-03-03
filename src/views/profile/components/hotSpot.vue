@@ -73,7 +73,7 @@
 						this.hotVideoList = oldList.concat(list);
 						this.pageNum++;
 					}else{
-						this.$Message.warning('没有更多了')
+						this.$message.warning('没有更多了')
 					}
 				})
 			},

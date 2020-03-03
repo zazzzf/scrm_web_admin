@@ -53,7 +53,7 @@
 				<el-form-item label="报告文件" prop="reportFileName">
 					<Upload v-if="showDialog" :data="formData.reportFileName"
 					 :fileList="formData.internal_report_id?[{url:formData.reportFileName,name:formData.reportName}]:[]"
-					 :type="5" :prefix="'BG_'" :accept="'.pdf'" :qnlink="'http://scrm-report-qn.xaxhl.net'" :md5="false" @on-success="getLink">
+					 :type="5" :prefix="'BG_'" :accept="'.pdf'" :md5="false" @on-success="getLink">
 					 </Upload>
 				</el-form-item>
 				<el-form-item label="报告名称" prop="reportName">
@@ -143,7 +143,7 @@ import VueTagsInput from '@johmun/vue-tags-input';
 			submit(){
 				let postData = {
 					reportName: this.formData.reportName,
-					reportFileName: this.formData.reportFileName,
+					reportFileName: '/'+ this.formData.reportFileName,
 					categoryId: this.formData.categoryId
 				};
 				if(this.formData.tags.length>0){

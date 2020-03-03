@@ -59,17 +59,9 @@ export default {
       this.$store.dispatch('app/toggleSideBar')
     },
     logout() {
-      // await this.$store.dispatch('user/logout')
-      Cookies.remove('email');
-      Cookies.remove('store_id');
-      Cookies.remove('userName');
-      Cookies.remove('master');
-      Cookies.remove('user_id');
-      Cookies.remove('userinfo');
-      Cookies.remove('SCRM_PLATE_TOKEN');
-      Cookies.remove('token');
-      Cookies.remove('role');
-      this.$store.dispatch('user/logout', [])
+      this.$store.dispatch('user/logout')
+      
+      
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     }
   },

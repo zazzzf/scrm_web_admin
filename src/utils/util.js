@@ -1,5 +1,6 @@
 import axios from 'axios';
-
+import FileSaver from "file-saver";
+import XLSX from "xlsx";
 
 let util = {
 
@@ -391,6 +392,55 @@ util.getQueryVariable = function(variable,query) {
         }
     }
     return (false);
-}
+};
+
 
 export default util;
+
+/**
+ * @param filename  导出的xlsx文件名称
+ * @param element 导出的table元素
+ */
+export function exportExcel(filename,element) {
+    /* 从表生成工作簿对象 */
+    var wb = XLSX.utils.table_to_book(element);
+    /* 获取二进制字符串作为输出 */
+    var wbout = XLSX.write(wb, {
+        bookType: "xlsx",
+        bookSST: true,
+        type: "array"
+    });
+    try {
+        FileSaver.saveAs(
+        //Blob 对象表示一个不可变、原始数据的类文件对象。
+        //Blob 表示的不一定是JavaScript原生格式的数据。
+        //File 接口基于Blob，继承了 blob 的功能并将其扩展使其支持用户系统上的文件。
+        //返回一个新创建的 Blob 对象，其内容由参数中给定的数组串联组成。
+        new Blob([wbout], { type: "application/octet-stream" }),
+        //设置导出文件名称
+        `${filename}.xlsx`
+        );
+    } catch (e) {
+        if (typeof console !== "undefined") console.log(e, wbout);
+    }
+    return wbout;
+}
+
+/**
+ * 处理emjio
+ */
+export function StringExchangeEmoji(str){
+    var reg = /\&#.*?;/g;
+    var result = str.replace(reg,function(char){
+        var H,L,code;
+        if(char.length == 9 ){
+            code = parseInt(char.match(/[0-9]+/g));
+            H = Math.floor((code-0x10000) / 0x400)+0xD800;
+            L = (code - 0x10000) % 0x400 + 0xDC00;
+            return unescape("%u"+H.toString(16)+"%u"+L.toString(16));
+        }else{
+            return char;
+        }
+    });
+    return result;
+}

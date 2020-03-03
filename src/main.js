@@ -21,6 +21,11 @@ import '@/icons' // icon
 import '@/permission' // permission control
 import md5 from 'js-md5';
 
+import config from './config/config'
+
+import htmlToPdf from '@/utils/htmlToPdf'
+// 使用Vue.use()方法就会调用工具方法中的install方法
+Vue.use(htmlToPdf)
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
@@ -34,6 +39,8 @@ import md5 from 'js-md5';
 //   mockXHR()
 // }
 Vue.prototype.$md5 = md5;
+Vue.prototype.$config = config
+
 Vue.use(ElementUI, {
   size: Cookies.get('size') || 'medium', // set element-ui default size
   i18n: (key, value) => i18n.t(key, value)

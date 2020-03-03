@@ -24,11 +24,10 @@ tagsApi.delTags = function(data) {
 		data: qs.stringify(data),
 	})
 };
-tagsApi.tagList = function(data) {
+tagsApi.tagList = function() {
 	return request({
 		url: 'manager/tag/tagList',
-		method: 'POST',
-		data: qs.stringify(data),
+		method: 'GET',
 	})
 };
 

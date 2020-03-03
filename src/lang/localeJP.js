@@ -2,7 +2,7 @@ export default {
 	//路由相关
 	route: {
 	   //路由相关
-	   page_title:'速報SCRM',
+	   page_title:'速報SCS',
 	   logout:'ログオフする',
 	   home:' ホームページ',
 	   data_overview:'データの概要',

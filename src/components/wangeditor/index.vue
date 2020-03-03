@@ -4,7 +4,7 @@
 			<div id="div1" class="toolbar"></div>
 			<el-upload
 				class="upload-demo"
-				action="http://up-z1.qiniup.com"
+				:action="$config.QINIU_BASE_URL"
 				:limit="1"
 				accept="video/*,.mp4"
 				:data="uploadData"
@@ -114,7 +114,7 @@ export default {
 					}
 				],
 				//---------配置上传图片---------
-				uploadImgServer:"http://up-z1.qiniup.com",
+				uploadImgServer: that.$config.QINIU_BASE_URL,
 				customUploadImg :function (files, insert) {
 				    new Promise((resolve,reject) => {
 						qiniuToken({type:1}).then(res => {
@@ -128,7 +128,7 @@ export default {
 						formData.append('token',token)
 						formData.append('key',key)
 						uploadImg(formData).then(res=> {
-							insert('http://scrm-image-qn.xaxhl.net/' + res.key) 
+							insert(that.$config.QINIU_URL_TYPE_IMG + res.key) 
 						})
 					})
 				
@@ -175,7 +175,7 @@ export default {
 			}
 			let that = this;
 			if (response.hash && response.key) {
-				var videoLink =  'http://scrm-video-qn.xaxhl.net/' + response.key;
+				var videoLink =  that.$config.QINIU_URL_TYPE_VIDEO + response.key;
 				var video = '<video src='+videoLink + 'controls="controls" width="100%"></video>'
 				
 				editor.txt.append(`<p><video src=${videoLink} controls="controls" style='width:100%;height:400px'></video><br></p>`);

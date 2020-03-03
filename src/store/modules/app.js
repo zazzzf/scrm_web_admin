@@ -3,10 +3,12 @@ import Cookies from 'js-cookie'
 const state = {
   sidebar: {
     opened: Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true,
-    withoutAnimation: false
+    withoutAnimation: false,
   },
   language:'',
-  device: 'desktop'
+  device: 'desktop',
+  loading: 0,
+  isMobile: false,
 }
 
 const mutations = {
@@ -30,7 +32,16 @@ const mutations = {
   SET_LANGUAGE: (state, language) => {
     state.language = language
     Cookies.set('language', language)
+  },
+  SET_LOADING: (state, type) => {
+    if(type == "add"){state.loading ++}
+    if(type == "end"){state.loading --}
+    if(type == "clear"){state.loading = 0}
+  },
+  SET_UA:(state, type) => {
+    state.isMobile = type
   }
+  
 }
 
 const actions = {
@@ -45,6 +56,16 @@ const actions = {
   },
   setLanguage({ commit }, language) {
     commit('SET_LANGUAGE', language)
+  },
+  setLoading({commit}, type){
+    commit('SET_LOADING',type)
+  },
+  setUA({commit},ua){
+    var ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
+    var isIphone =!ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/);
+    var isAndroid = ua.match(/(Android)\s+([\d.]+)/);
+    var isMobile = isIphone || isAndroid ? true:false;
+    commit('SET_UA',isMobile)
   }
 }
 

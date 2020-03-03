@@ -12,7 +12,7 @@
 					<el-form-item :label="$t('casemanage.cover')" prop='cover'>
 						<el-upload
 						  class="avatar-uploader"
-						  action="http://up-z1.qiniup.com"
+						  :action="$config.QINIU_BASE_URL"
 						  accept="image/png, image/jpeg, image/jpg"
 						  name="file"
 						  :max-size="5120"
@@ -87,7 +87,7 @@
 			coverSuccessUpload(response, file, fileList) {
 				let that = this;
 				if (response.hash && response.key) {
-					this.scriptData.cover = 'http://scrm-image-qn.xaxhl.net/' + response.key;
+					this.scriptData.cover = that.$config.QINIU_URL_TYPE_IMG + response.key;
 				} else {
 					this.$message.error(response.error);
 				}

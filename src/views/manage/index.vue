@@ -10,7 +10,7 @@
 		</div>
         <div>
             <div style="min-height: 580px;">
-				<el-table  :data="groupList">
+				<el-table  :data="groupList" id="userTable">
 					<el-table-column prop="name" :label="$t('manage.company_name')"></el-table-column>
 					<el-table-column prop="username" :label="$t('manage.company_master')"></el-table-column>
 					<el-table-column prop="email"  :label="$t('manage.email')"></el-table-column>
@@ -162,7 +162,9 @@ export default {
 		pageChange(page){
 			this.pageData.page = page;
 			this.getUserGroup();
-		}
+        },
+        
+        
     },
     created(){
         this.getUserGroup();

@@ -1,0 +1,230 @@
+.details-title{
+    height: 300px;
+    background: linear-gradient(to left, #516389,#0E2A3F);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    flex-direction: column;
+}
+.details-chart{
+    text-align: center;
+    #hotChart{
+        margin: 0 auto;
+    }
+}
+.details-hotStar{
+    margin-bottom: 150px;
+    .title-image{
+        width: 200px;
+        position: relative;
+        left: 37%;
+        bottom: -40px;
+    }
+    .dy-star-box{
+        height: 200px;
+        margin: 0 20px;
+        border: 1px solid #0E2A3F;
+        border-radius: 30px;
+    }
+}
+.author-header{
+    border: #C7D0FA 10px solid;
+    z-index: 2;
+    position: relative;
+    left: 55px;
+}
+.author-info{
+    height: 100px;
+    width: 180px;
+    position: relative;
+    right: 45px;
+    z-index: 1;
+    &-top{
+        margin-top: 5px;
+        height: 50px;
+        background: #8AB5F9;
+        border-top-right-radius: 25px;
+        border-bottom-right-radius: 25px;
+        padding-left: 50px;
+        color: #fff;
+        font-weight: bold;
+        p{
+            text-align: center;
+            line-height: 20px;
+            padding-right: 20px;
+        }
+        p:nth-child(1){
+            padding-top:5px ;
+            display: inline-block;
+            white-space: nowrap; 
+            width: 100%; 
+            overflow: hidden;
+            text-overflow:ellipsis;
+        }
+    }
+    &-bottom{
+        height: 40px;
+        background: #5189D3;
+        border-top-right-radius: 25px;
+        border-bottom-right-radius: 25px;
+        padding-left: 50px;
+        color: #fff;
+        font-weight: bold;
+        p{
+            text-align: center;
+            line-height: 20px;
+            padding-right: 20px;
+            line-height: 40px;
+        }
+    }
+}
+.dy-day{
+    background-color: #C2D3ED;
+    padding-bottom: 50px;
+    &-header-title{
+        display: inline-block;
+        border: 2px solid #0E2A3F;
+        background-color: #fff;
+        position: relative;
+        bottom: 20px;
+        border-radius: 25px;
+        width: 200px;
+        height: 70px;
+        margin-left: 400px;
+        text-align: center;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        span{
+            line-height: 66px;
+            font-size: 25px;
+            font-weight: bold;
+            color: #000;
+        }
+        span:nth-child(2){
+            color:#E45D63 ;
+        }
+    }
+    &-top-list{
+        height: 250px;
+        border: 2px solid #0E2A3F;
+        border-radius: 25px;
+        background-color: #fff;
+        margin:40px 40px;
+        padding: 0 40px;
+        font-size: 15px;
+        p:nth-child(-n+4){
+            color: #384D59;
+            font-weight: bold;
+        }
+        p:nth-child(1){
+            color: #276CD3;
+            overflow:hidden; 
+            text-overflow:ellipsis;
+            display:-webkit-box; 
+            -webkit-box-orient:vertical;
+            -webkit-line-clamp:2; 
+        }
+        &-col-two{
+            height: 160px;
+        }
+        
+        
+    }
+}
+.el-icon-picture-outline{
+    font-size: 50px;
+    line-height: 155px;
+}
+.dy-like{
+    padding-bottom:205px
+}
+.dy-pl{
+    background-color: #B1C8E8;
+}
+.dy-fx{
+    background-color: #9EB9E4;
+}
+
+.ks-day-top-list{
+    &-1,&-2,&-3{
+        padding-bottom: 150px
+    }
+    &-1{
+        width: 100%;
+        height: 500px;
+        .dy-day-top-list{
+            width: 50%;
+            margin-left: 40px;
+            display: inline-flex;
+            position: relative;
+            left: 80px;
+            height: 400px;
+            align-items: flex-start;
+            padding: 40px;
+        }
+        &-phone{
+            height: 500px;
+            width: 250px;
+            background: url('../../../../assets/plate_images/ipx.png') #fff;
+            background-size: 100%;
+            background-repeat: no-repeat;
+            float: left;
+            position: relative;
+            left: 140px;
+            z-index: 2;
+            padding-left:16px;
+            padding-top: 16px;
+        }
+    }
+    &-2,&-3{
+        width: 50%;
+        display: inline-flex;
+        &-phone{
+            display: none;
+        }
+    }
+    &-2{
+        .dy-day-top-list{
+            margin-left: 40px;
+            margin-right: 20px;
+            align-items: flex-start;
+            padding: 40px;
+            height: 300px;
+        }
+    }
+    &-3{
+        .dy-day-top-list{
+            margin-right:40px;
+            margin-left: 20px;
+            align-items: flex-start;
+            padding: 40px;
+            height: 300px;
+        }
+    }
+}
+
+.dy-hot-keywords{
+    background: url(../../../../assets/plate_images/dyresou.png);
+    background-size: 100%;
+    height: 650px;
+    background-repeat: no-repeat;
+    p{
+        margin: 0 auto;
+        width: 280px;
+        font-size: 16px;
+        line-height: 40px;
+        font-weight: bold;
+        color: #384D59;
+        position: relative;
+        top: 100px;
+        right: 170px;
+        white-space: nowrap; 
+        overflow: hidden;
+        text-overflow:ellipsis;
+
+        span{
+            border-bottom: 1px solid #000;
+            padding-bottom: 5px;
+        }
+    }
+}

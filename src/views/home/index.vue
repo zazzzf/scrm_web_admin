@@ -3,16 +3,13 @@
 		<!-- :xs="24" :sm="12" :lg="6" -->
 		<el-row :gutter="20">
 			<el-col :xs="24" :sm="12" :lg="18">
-				<el-button style="padding: 10px 0;width:100%" type="primary" @click="quickVideo">快速发布</el-button>
-				<el-card :body-style="{ height: '400px' }">
-					 <div slot="header" class="clearfix">
-						<span>待审核热点视频</span>
-					</div>
-					<div style="height:300px; overflow: auto"><case-table></case-table></div>
+				<el-card :body-style="{ height: '460px' }">
+					<el-button style="width: 100%" type="primary" @click="handleClick">快捷发布(热点视频)</el-button>
+					<div style="height:360px; overflow: auto"><hot-video-table></hot-video-table></div>
 				</el-card>
 			</el-col>
 			<el-col :xs="24" :sm="12" :lg="6">
-				<el-card :body-style="{ height: '430px' }"  header="日历">
+				<el-card :body-style="{ height: '400px' }" header="日历">
 					<Calendar  :markDate="['2019-07-01','2019-07-06']"
 					:textTop="weekName" :topDateName='topDateName'></Calendar>
 				</el-card>
@@ -29,16 +26,13 @@ import echarts from 'echarts';
 import 'echarts-wordcloud';
 import {storeIncrease} from '@/api/home';
 import Calendar from '@/components/vue-calendar/calendar.vue';
-import caseTable from './components/caseTable';
-// import courseTable from './components/courseTable';
-// import reportTable from './components/reportTable';
-// import scriptTable from './components/scriptTable';
+import hotVideoTable from './components/hotVideoTable';
 
 export default {
 	name: 'Dashboard',
 	components: {
 		Calendar,
-		caseTable,
+		hotVideoTable,
 	},
 	data() {
 		return {
@@ -59,15 +53,14 @@ export default {
 		}
 	},
 	methods: {
-		quickVideo(){
+		handleClick() {
 			this.$router.push({
-				name:"videoAdd",
+				name:"hotVideoAdd",
 				params:{
-					quick: true
+					quick:true
 				}
 			})
 		},
-		handleClick(tab) {},
 		drawstorerease() {
 			var xTitle = [];
 			var yData = [];

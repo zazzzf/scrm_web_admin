@@ -2,10 +2,11 @@ import axios from 'axios'
 import { Message } from 'element-ui'
 import store from '@/store'
 import {getToken} from '@/utils/auth'
+import configJson from '@/config/config'
 
 // create an axios instance
 const service = axios.create({
-  baseURL: 'http://scrm-api.xaxhl.net/index.php?s=', // url = base url + request url
+  baseURL:  configJson.API_URL, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000, // request timeout
 })
