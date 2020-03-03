@@ -49,7 +49,7 @@ export default {
         },
         qiniuNamePrefix:{
             type: String,
-            default: ()=> "",    //     video/*,.mp4
+            default: ()=> "",   
         },
         uploadType:{
             type: Number,
@@ -57,7 +57,7 @@ export default {
         },
         qiniuVideoBaseUrl:{
             type: String,
-            default: ()=> "",    //     video/*,.mp4
+            default: ()=> "",    //    
         },
         propFileList: {
             type: Array,

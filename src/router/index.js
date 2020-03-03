@@ -124,6 +124,62 @@ export const asyncRouterMap = [
       },
     ]
   },
+    /**
+   * 案例研究
+   */
+  {
+    path: '/case',
+    component: Layout,
+    redirect: '/case/case-manage',
+    name: 'case',
+    meta: {
+      title: 'case',
+      icon: 'clipboard'
+    },
+    children: [{
+        path: 'case-manage',
+        name: 'caseManage',
+        component: () => import('@/views/case/index.vue'),
+        meta: {
+          title: 'caseManage',
+          icon: 'clipboard',
+          affix: true
+        }
+      },
+      {
+        path: 'script-manage',
+        name: 'scriptManage',
+        component: () => import('@/views/script/index.vue'),
+        meta: {
+          title: 'scriptLibrary',
+          icon: 'people',
+          affix: true
+        }
+      },
+      {
+        path: 'script-add',
+        name: 'scriptAdd',
+        hidden: true,
+        component: () => import('@/views/script/add.vue'),
+        meta: {
+          title: 'scriptAdd',
+          icon: 'mange',
+          affix: true
+        }
+      },
+      {
+        path: 'case-add',
+        name: 'caseAdd',
+        hidden: true,
+        component: () => import('@/views/case/add.vue'),
+        meta: {
+          title: 'caseAdd',
+          icon: 'mange',
+          affix: true
+        }
+      },
+    ]
+  },
   /**
    * 热点追踪
    */
@@ -179,62 +235,7 @@ export const asyncRouterMap = [
       },
     }]
   },
-  /**
-   * 案例研究
-   */
-  // {
-  //   path: '/case',
-  //   component: Layout,
-  //   redirect: '/case/case-manage',
-  //   name: 'case',
-  //   meta: {
-  //     title: 'case',
-  //     icon: 'clipboard'
-  //   },
-  //   children: [{
-  //       path: 'case-manage',
-  //       name: 'caseManage',
-  //       component: () => import('@/views/case/index.vue'),
-  //       meta: {
-  //         title: 'caseManage',
-  //         icon: 'clipboard',
-  //         affix: true
-  //       }
-  //     },
-  //     {
-  //       path: 'script-manage',
-  //       name: 'scriptManage',
-  //       component: () => import('@/views/script/index.vue'),
-  //       meta: {
-  //         title: 'scriptLibrary',
-  //         icon: 'people',
-  //         affix: true
-  //       }
-  //     },
-  //     {
-  //       path: 'script-add',
-  //       name: 'scriptAdd',
-  //       hidden: true,
-  //       component: () => import('@/views/script/add.vue'),
-  //       meta: {
-  //         title: 'scriptAdd',
-  //         icon: 'mange',
-  //         affix: true
-  //       }
-  //     },
-  //     {
-  //       path: 'case-add',
-  //       name: 'caseAdd',
-  //       hidden: true,
-  //       component: () => import('@/views/case/add.vue'),
-  //       meta: {
-  //         title: 'caseAdd',
-  //         icon: 'mange',
-  //         affix: true
-  //       }
-  //     },
-  //   ]
-  // },
+
 /**
  * 内部报告
  */
