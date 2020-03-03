@@ -8,11 +8,11 @@
 
 let apiUrl = '';
 let config = {};
-let debug =  false;//是否测试模式
+let debug =  true;//是否测试模式
 // console.log(process.env.NODE_ENV)
 if (debug) {
     //测试
-    apiUrl = 'http://scrm-api-dev.xaxhl.net/index.php?s=';
+    apiUrl = 'http://scs-api-dev.xaxhl.net/index.php?s=';
 }else{
     //线上
     apiUrl = 'http://scrm-api.xaxhl.net/index.php?s=';

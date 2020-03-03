@@ -37,8 +37,6 @@ router.beforeEach(async(to, from, next) => {
       } else {
         try {
           // get user info
-          
-
           await store.dispatch('user/getTags')
           await store.dispatch('user/getCategoryList')
           await store.dispatch('app/setLoading',"clear")

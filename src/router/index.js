@@ -134,7 +134,8 @@ export const asyncRouterMap = [
     name: 'case',
     meta: {
       title: 'case',
-      icon: 'clipboard'
+      icon: 'clipboard',
+      role:['admin']
     },
     children: [{
         path: 'case-manage',
@@ -143,7 +144,8 @@ export const asyncRouterMap = [
         meta: {
           title: 'caseManage',
           icon: 'clipboard',
-          affix: true
+          affix: true,
+          role:['admin']
         }
       },
       {
@@ -153,7 +155,8 @@ export const asyncRouterMap = [
         meta: {
           title: 'scriptLibrary',
           icon: 'people',
-          affix: true
+          affix: true,
+          role:['admin']
         }
       },
       {
@@ -164,7 +167,8 @@ export const asyncRouterMap = [
         meta: {
           title: 'scriptAdd',
           icon: 'mange',
-          affix: true
+          affix: true,
+          role:['admin']
         }
       },
       {
@@ -175,7 +179,8 @@ export const asyncRouterMap = [
         meta: {
           title: 'caseAdd',
           icon: 'mange',
-          affix: true
+          affix: true,
+          role:['admin']
         }
       },
     ]
@@ -190,7 +195,7 @@ export const asyncRouterMap = [
     name: 'hotTrack',
     meta: {
       title: '热点追踪',
-          role:['admin'],
+          role:['admin','editor'],
           icon: 'hot'
     },
     children: [{
@@ -211,7 +216,7 @@ export const asyncRouterMap = [
         meta: {
           title: '热点视频',
           icon: 'hotVideo',
-          role:['admin'],
+          role:['admin','editor'],
           affix: true
         }
       },
