@@ -88,7 +88,7 @@ export default {
 			}
 		};
 		return {
-			// uploadApi: 'http://scrm-api.shifuhui.net/index.php?s=merchant/material/upload',
+			// uploadApi: 'http://scrm-api.xaxhl.net/index.php?s=merchant/material/upload',
 			uploadApi: 'http://up-z1.qiniup.com',
 			uploadSpeed: '0KB/s',
 			uploadData: {

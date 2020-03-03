@@ -103,17 +103,29 @@ const actions = {
       resolve()
     })
   },
-	
+
 	// getTags
 	getTags({ commit, state }) {
 	  return new Promise((resolve, reject) => {
 	    tagsApi.tagList().then(response => {
 	      const { data } = response
-		  commit('SET_TAGLIST', data)
-	      resolve(data)
-	    }).catch(error => {
-	      reject(error)
-	    })
+        commit('SET_TAGLIST', data)
+          resolve(data)
+        }).catch(error => {
+          reject(error)
+        })
+	  })
+  },
+  	// getTags
+	getCategory({ commit, state }) {
+	  return new Promise((resolve, reject) => {
+	    categoryApi.categoryList().then(response => {
+	      const { data } = response
+        commit('SET_CATEGORY', data)
+          resolve(data)
+        }).catch(error => {
+          reject(error)
+        })
 	  })
   },
   

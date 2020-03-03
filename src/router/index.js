@@ -26,7 +26,7 @@ import Layout from '@/layout'
  */
 
 /**
- * constantRoutes
+ * constantRouterMap
  * a base page that does not have permission requirements
  * all roles can be accessed
  */
